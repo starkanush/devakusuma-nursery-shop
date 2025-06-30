@@ -8,85 +8,63 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ShoppingCart, Star, ArrowLeft, Plus, Minus, Leaf, Package, CheckCircle, Truck } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import SizeSelector from "@/components/SizeSelector";
 import { toast } from "sonner";
+import { plants, PlantSize } from "@/data/plants";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
+  const [selectedSize, setSelectedSize] = useState<PlantSize | null>(null);
 
-  // Mock product data - in a real app, this would come from an API
-  const product = {
-    id: 1,
-    name: "Monstera Deliciosa",
-    price: 299,
-    originalPrice: 399,
-    images: [
-      "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=600&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=600&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=600&h=600&fit=crop"
-    ],
-    category: "Indoor Plants",
-    rating: 4.8,
-    reviewCount: 247,
-    discount: 25,
-    inStock: true,
-    stockCount: 15,
-    description: "The Monstera Deliciosa, also known as the Swiss Cheese Plant, is a stunning tropical houseplant known for its large, glossy green leaves with natural holes and splits. This plant is perfect for adding a dramatic, jungle-like feel to any indoor space.",
-    features: [
-      "Easy to care for and perfect for beginners",
-      "Excellent air purifier",
-      "Fast-growing with dramatic foliage",
-      "Thrives in bright, indirect light",
-      "Pet-friendly (non-toxic)"
-    ],
-    careInstructions: {
-      light: "Bright, indirect sunlight",
-      water: "Water when top inch of soil is dry",
-      humidity: "40-60% humidity preferred",
-      temperature: "65-85°F (18-29°C)",
-      fertilizer: "Monthly during growing season"
-    },
-    specifications: {
-      "Plant Height": "12-18 inches",
-      "Pot Size": "6 inch diameter",
-      "Growth Rate": "Fast",
-      "Origin": "Central America",
-      "Botanical Name": "Monstera deliciosa"
-    }
-  };
+  const product = plants.find(p => p.id === parseInt(id || "0"));
 
-  const relatedProducts = [
-    {
-      id: 2,
-      name: "Fiddle Leaf Fig",
-      price: 449,
-      image: "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=300&h=300&fit=crop",
-      rating: 4.6
-    },
-    {
-      id: 3,
-      name: "Snake Plant",
-      price: 199,
-      image: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=300&h=300&fit=crop",
-      rating: 4.9
-    },
-    {
-      id: 4,
-      name: "Peace Lily",
-      price: 179,
-      image: "https://images.unsplash.com/photo-1465379944081-7f47de8d74ac?w=300&h=300&fit=crop",
-      rating: 4.7
-    }
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-white">
+        <Navigation />
+        <div className="max-w-4xl mx-auto px-4 py-16 text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">Product not found</h1>
+          <Link to="/products" className="text-green-600 hover:text-green-700">
+            ← Back to Products
+          </Link>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  // Set default size if not selected
+  if (!selectedSize && product.sizes.length > 0) {
+    setSelectedSize(product.sizes[0]);
+  }
+
+  const images = [
+    product.image,
+    "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=600&h=600&fit=crop"
   ];
 
+  const relatedProducts = plants.filter(p => p.category === product.category && p.id !== product.id).slice(0, 3);
+
   const handleAddToCart = () => {
-    toast.success(`Added ${quantity} x ${product.name} to cart!`);
+    if (!selectedSize) {
+      toast.error("Please select a size first!");
+      return;
+    }
+    toast.success(`Added ${quantity} x ${product.name} (${selectedSize.name}) to cart!`);
   };
 
   const handleBuyNow = () => {
+    if (!selectedSize) {
+      toast.error("Please select a size first!");
+      return;
+    }
     toast.success("Redirecting to checkout...");
   };
+
+  const currentPrice = selectedSize?.price || product.sizes[0]?.price || 0;
 
   return (
     <div className="min-h-screen bg-white">
@@ -113,13 +91,13 @@ const ProductDetail = () => {
           <div className="space-y-4">
             <div className="aspect-square rounded-2xl overflow-hidden bg-gray-100">
               <img 
-                src={product.images[selectedImage]} 
+                src={images[selectedImage]} 
                 alt={product.name}
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="flex gap-4">
-              {product.images.map((image, index) => (
+              {images.map((image, index) => (
                 <button
                   key={index}
                   onClick={() => setSelectedImage(index)}
@@ -154,32 +132,32 @@ const ProductDetail = () => {
                     />
                   ))}
                 </div>
-                <span className="text-gray-600">({product.reviewCount} reviews)</span>
+                <span className="text-gray-600">({product.rating} rating)</span>
               </div>
 
               <div className="flex items-center gap-4 mb-6">
-                <span className="text-4xl font-bold text-green-600">₹{product.price}</span>
-                <span className="text-2xl text-gray-500 line-through">₹{product.originalPrice}</span>
-                <Badge className="bg-red-500 text-white">
-                  {product.discount}% OFF
+                <span className="text-4xl font-bold text-green-600">₹{currentPrice}</span>
+                <Badge className={`${
+                  product.careLevel === 'Easy' ? 'bg-green-100 text-green-700' :
+                  product.careLevel === 'Medium' ? 'bg-yellow-100 text-yellow-700' :
+                  'bg-red-100 text-red-700'
+                }`}>
+                  {product.careLevel} Care
                 </Badge>
               </div>
 
               <p className="text-gray-700 text-lg leading-relaxed mb-6">
                 {product.description}
               </p>
+            </div>
 
-              <div className="space-y-4 mb-8">
-                <h3 className="font-semibold text-lg">Key Features:</h3>
-                <ul className="space-y-2">
-                  {product.features.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-2">
-                      <CheckCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-700">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+            {/* Size Selection */}
+            <div className="border-t pt-6">
+              <SizeSelector 
+                sizes={product.sizes}
+                selectedSize={selectedSize}
+                onSizeSelect={setSelectedSize}
+              />
             </div>
 
             {/* Quantity and Add to Cart */}
@@ -200,7 +178,7 @@ const ProductDetail = () => {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => setQuantity(Math.min(product.stockCount, quantity + 1))}
+                      onClick={() => setQuantity(quantity + 1)}
                       className="px-3"
                     >
                       <Plus className="h-4 w-4" />
@@ -210,7 +188,7 @@ const ProductDetail = () => {
                 
                 <div className="flex items-center gap-2 text-green-600">
                   <Package className="h-5 w-5" />
-                  <span className="font-medium">{product.stockCount} in stock</span>
+                  <span className="font-medium">In Stock</span>
                 </div>
               </div>
 
@@ -245,13 +223,12 @@ const ProductDetail = () => {
           </div>
         </div>
 
-        {/* Product Details Tabs */}
+        {/* Plant Details Tabs */}
         <div className="mb-16">
           <Tabs defaultValue="care" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="care">Care Instructions</TabsTrigger>
-              <TabsTrigger value="specs">Specifications</TabsTrigger>
-              <TabsTrigger value="reviews">Reviews</TabsTrigger>
+              <TabsTrigger value="specs">Plant Details</TabsTrigger>
             </TabsList>
             
             <TabsContent value="care" className="mt-8">
@@ -262,17 +239,32 @@ const ProductDetail = () => {
                     Plant Care Guide
                   </h3>
                   <div className="grid md:grid-cols-2 gap-8">
-                    {Object.entries(product.careInstructions).map(([key, value]) => (
-                      <div key={key} className="flex items-start gap-4">
-                        <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <Leaf className="h-6 w-6 text-green-600" />
-                        </div>
-                        <div>
-                          <h4 className="font-semibold text-lg capitalize mb-2">{key}</h4>
-                          <p className="text-gray-600">{value}</p>
-                        </div>
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Leaf className="h-6 w-6 text-green-600" />
                       </div>
-                    ))}
+                      <div>
+                        <h4 className="font-semibold text-lg mb-2">Light Requirements</h4>
+                        <p className="text-gray-600">
+                          {product.careLevel === 'Easy' ? 'Bright, indirect light or partial shade' :
+                           product.careLevel === 'Medium' ? 'Bright, indirect light preferred' :
+                           'Bright light with some direct morning sun'}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Leaf className="h-6 w-6 text-green-600" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-lg mb-2">Watering</h4>
+                        <p className="text-gray-600">
+                          {product.careLevel === 'Easy' ? 'Water when top inch of soil is dry' :
+                           product.careLevel === 'Medium' ? 'Regular watering, keep soil slightly moist' :
+                           'Careful watering schedule, avoid overwatering'}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -281,82 +273,23 @@ const ProductDetail = () => {
             <TabsContent value="specs" className="mt-8">
               <Card>
                 <CardContent className="p-8">
-                  <h3 className="text-2xl font-bold mb-6">Product Specifications</h3>
+                  <h3 className="text-2xl font-bold mb-6">Plant Information</h3>
                   <div className="grid md:grid-cols-2 gap-6">
-                    {Object.entries(product.specifications).map(([key, value]) => (
-                      <div key={key} className="flex justify-between items-center py-3 border-b border-gray-200">
-                        <span className="font-medium text-gray-900">{key}:</span>
-                        <span className="text-gray-600">{value}</span>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-            
-            <TabsContent value="reviews" className="mt-8">
-              <Card>
-                <CardContent className="p-8">
-                  <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-2xl font-bold">Customer Reviews</h3>
-                    <div className="flex items-center gap-2">
-                      <div className="flex">
-                        {[1,2,3,4,5].map((i) => (
-                          <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                        ))}
-                      </div>
-                      <span className="text-lg font-medium">{product.rating}</span>
-                      <span className="text-gray-600">({product.reviewCount} reviews)</span>
+                    <div className="flex justify-between items-center py-3 border-b border-gray-200">
+                      <span className="font-medium text-gray-900">Category:</span>
+                      <span className="text-gray-600">{product.category}</span>
                     </div>
-                  </div>
-                  
-                  <div className="space-y-6">
-                    {/* Mock reviews */}
-                    <div className="border-b pb-6">
-                      <div className="flex items-center gap-4 mb-3">
-                        <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                          <span className="font-medium text-green-600">A</span>
-                        </div>
-                        <div>
-                          <h4 className="font-medium">Ananya Sharma</h4>
-                          <div className="flex items-center gap-2">
-                            <div className="flex">
-                              {[1,2,3,4,5].map((i) => (
-                                <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                              ))}
-                            </div>
-                            <span className="text-sm text-gray-600">2 days ago</span>
-                          </div>
-                        </div>
-                      </div>
-                      <p className="text-gray-700">
-                        Absolutely love this Monstera! It arrived in perfect condition and has been thriving in my living room. 
-                        The leaves are beautiful and it's already showing new growth. Highly recommend!
-                      </p>
+                    <div className="flex justify-between items-center py-3 border-b border-gray-200">
+                      <span className="font-medium text-gray-900">Care Level:</span>
+                      <span className="text-gray-600">{product.careLevel}</span>
                     </div>
-                    
-                    <div className="border-b pb-6">
-                      <div className="flex items-center gap-4 mb-3">
-                        <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                          <span className="font-medium text-green-600">R</span>
-                        </div>
-                        <div>
-                          <h4 className="font-medium">Rahul Patel</h4>
-                          <div className="flex items-center gap-2">
-                            <div className="flex">
-                              {[1,2,3,4].map((i) => (
-                                <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                              ))}
-                              <Star className="h-4 w-4 text-gray-300" />
-                            </div>
-                            <span className="text-sm text-gray-600">1 week ago</span>
-                          </div>
-                        </div>
-                      </div>
-                      <p className="text-gray-700">
-                        Great plant and excellent packaging. The only reason I'm giving 4 stars instead of 5 is that 
-                        it took a bit longer to deliver than expected. But overall very satisfied with the quality!
-                      </p>
+                    <div className="flex justify-between items-center py-3 border-b border-gray-200">
+                      <span className="font-medium text-gray-900">Available Sizes:</span>
+                      <span className="text-gray-600">{product.sizes.length} options</span>
+                    </div>
+                    <div className="flex justify-between items-center py-3 border-b border-gray-200">
+                      <span className="font-medium text-gray-900">Stock Status:</span>
+                      <span className="text-green-600">In Stock</span>
                     </div>
                   </div>
                 </CardContent>
@@ -366,49 +299,47 @@ const ProductDetail = () => {
         </div>
 
         {/* Related Products */}
-        <div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">You might also like</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {relatedProducts.map((relatedProduct) => (
-              <Link key={relatedProduct.id} to={`/product/${relatedProduct.id}`} className="group">
-                <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                  <div className="relative">
-                    <img 
-                      src={relatedProduct.image} 
-                      alt={relatedProduct.name}
-                      className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <Button 
-                      size="sm" 
-                      className="absolute top-4 right-4 bg-white/90 text-gray-700 hover:bg-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    >
-                      <ShoppingCart className="h-4 w-4" />
-                    </Button>
-                  </div>
-                  <CardContent className="p-6">
-                    <h3 className="font-semibold text-lg text-gray-900 mb-2 group-hover:text-green-600 transition-colors">
-                      {relatedProduct.name}
-                    </h3>
-                    <div className="flex items-center gap-1 mb-3">
-                      <div className="flex">
-                        {[1,2,3,4,5].map((i) => (
-                          <Star 
-                            key={i} 
-                            className={`h-4 w-4 ${i <= Math.floor(relatedProduct.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} 
-                          />
-                        ))}
+        {relatedProducts.length > 0 && (
+          <div>
+            <h2 className="text-3xl font-bold text-gray-900 mb-8">Related Plants</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {relatedProducts.map((relatedProduct) => (
+                <Link key={relatedProduct.id} to={`/product/${relatedProduct.id}`} className="group">
+                  <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div className="relative">
+                      <img 
+                        src={relatedProduct.image} 
+                        alt={relatedProduct.name}
+                        className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                    <CardContent className="p-6">
+                      <h3 className="font-semibold text-lg text-gray-900 mb-2 group-hover:text-green-600 transition-colors">
+                        {relatedProduct.name}
+                      </h3>
+                      <div className="flex items-center gap-1 mb-3">
+                        <div className="flex">
+                          {[1,2,3,4,5].map((i) => (
+                            <Star 
+                              key={i} 
+                              className={`h-4 w-4 ${i <= Math.floor(relatedProduct.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} 
+                            />
+                          ))}
+                        </div>
+                        <span className="text-sm text-gray-600">({relatedProduct.rating})</span>
                       </div>
-                      <span className="text-sm text-gray-600">({relatedProduct.rating})</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-2xl font-bold text-green-600">₹{relatedProduct.price}</span>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
+                      <div className="flex items-center justify-between">
+                        <span className="text-xl font-bold text-green-600">
+                          From ₹{Math.min(...relatedProduct.sizes.map(size => size.price))}
+                        </span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       <Footer />

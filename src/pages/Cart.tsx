@@ -15,8 +15,9 @@ const Cart = () => {
     {
       id: 1,
       name: "Monstera Deliciosa",
-      price: 299,
-      originalPrice: 399,
+      size: "Medium/Basic",
+      price: 140,
+      originalPrice: 185,
       image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=300&h=300&fit=crop",
       quantity: 2,
       inStock: true
@@ -24,18 +25,20 @@ const Cart = () => {
     {
       id: 2,
       name: "Snake Plant",
-      price: 199,
-      originalPrice: 249,
-      image: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=300&h=300&fit=crop",
+      size: "Sapling",
+      price: 25,
+      originalPrice: 35,
+      image: "https://images.unsplash.com/photo-1581595220892-b0739db3ba8c?w=300&h=300&fit=crop",
       quantity: 1,
       inStock: true
     },
     {
       id: 3,
-      name: "Peace Lily",
-      price: 179,
-      originalPrice: 219,
-      image: "https://images.unsplash.com/photo-1465379944081-7f47de8d74ac?w=300&h=300&fit=crop",
+      name: "ZZ Plant",
+      size: "Medium/Basic",
+      price: 275,
+      originalPrice: 320,
+      image: "https://images.unsplash.com/photo-1536882240095-0379873feb4e?w=300&h=300&fit=crop",
       quantity: 1,
       inStock: false
     }
@@ -66,8 +69,42 @@ const Cart = () => {
   const deliveryFee = subtotal >= 500 ? 0 : 50;
   const total = subtotal + deliveryFee;
 
-  const handleCheckout = () => {
-    toast.success("Redirecting to checkout...");
+  const handlePlaceOrder = () => {
+    // Compile order details
+    const orderDetails = {
+      items: cartItems.filter(item => item.inStock),
+      subtotal,
+      deliveryFee,
+      total: subtotal + deliveryFee,
+      orderDate: new Date().toLocaleDateString()
+    };
+
+    // Create WhatsApp message
+    let message = `🌱 *New Order from Devakusuma Nursery*\n\n`;
+    message += `📅 Order Date: ${orderDetails.orderDate}\n\n`;
+    message += `🛒 *Order Items:*\n`;
+    
+    orderDetails.items.forEach((item, index) => {
+      message += `${index + 1}. ${item.name} (${item.size})\n`;
+      message += `   Quantity: ${item.quantity}\n`;
+      message += `   Price: ₹${item.price} each\n`;
+      message += `   Total: ₹${item.price * item.quantity}\n\n`;
+    });
+
+    message += `💰 *Order Summary:*\n`;
+    message += `Subtotal: ₹${orderDetails.subtotal}\n`;
+    message += `Delivery: ${orderDetails.deliveryFee === 0 ? 'FREE' : `₹${orderDetails.deliveryFee}`}\n`;
+    message += `*Total Amount: ₹${orderDetails.total}*\n\n`;
+    message += `Please confirm this order and provide delivery details. Thank you! 🙏`;
+
+    // Encode message for WhatsApp URL
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/918870751384?text=${encodedMessage}`;
+    
+    // Open WhatsApp
+    window.open(whatsappUrl, '_blank');
+    
+    toast.success("Order details sent to WhatsApp!");
   };
 
   if (cartItems.length === 0) {
@@ -133,7 +170,8 @@ const Cart = () => {
                       <div className="flex justify-between items-start mb-2">
                         <div>
                           <h3 className="font-semibold text-lg text-gray-900">{item.name}</h3>
-                          <div className="flex items-center gap-2 mt-1">
+                          <p className="text-sm text-gray-600 mb-1">Size: {item.size}</p>
+                          <div className="flex items-center gap-2">
                             <span className="text-xl font-bold text-green-600">₹{item.price}</span>
                             <span className="text-sm text-gray-500 line-through">₹{item.originalPrice}</span>
                           </div>
@@ -236,11 +274,11 @@ const Cart = () => {
                 </div>
                 
                 <Button 
-                  onClick={handleCheckout}
+                  onClick={handlePlaceOrder}
                   className="w-full mt-6 bg-green-600 hover:bg-green-700 text-white py-4 text-lg"
                   disabled={cartItems.some(item => !item.inStock)}
                 >
-                  Proceed to Checkout
+                  Place Order
                 </Button>
                 
                 {deliveryFee > 0 && (

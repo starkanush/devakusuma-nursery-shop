@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -10,97 +9,16 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Search, ShoppingCart, Star, Filter, Grid, List } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { plants, comboPacks, categories } from "@/data/plants";
 
 const Products = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [viewMode, setViewMode] = useState("grid");
-  const [priceRange, setPriceRange] = useState([0, 1000]);
+  const [priceRange, setPriceRange] = useState([0, 600]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState("featured");
 
-  const products = [
-    {
-      id: 1,
-      name: "Monstera Deliciosa",
-      price: 299,
-      originalPrice: 399,
-      image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=400&h=400&fit=crop",
-      category: "Indoor Plants",
-      rating: 4.8,
-      discount: 25,
-      inStock: true,
-      description: "Beautiful swiss cheese plant perfect for indoor spaces"
-    },
-    {
-      id: 2,
-      name: "Fiddle Leaf Fig",
-      price: 449,
-      originalPrice: 549,
-      image: "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=400&h=400&fit=crop",
-      category: "Indoor Plants",
-      rating: 4.6,
-      discount: 18,
-      inStock: true,
-      description: "Statement plant with large, glossy leaves"
-    },
-    {
-      id: 3,
-      name: "Snake Plant",
-      price: 199,
-      originalPrice: 249,
-      image: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=400&h=400&fit=crop",
-      category: "Low Maintenance",
-      rating: 4.9,
-      discount: 20,
-      inStock: true,
-      description: "Hardy plant that thrives in low light conditions"
-    },
-    {
-      id: 4,
-      name: "Peace Lily",
-      price: 179,
-      originalPrice: 219,
-      image: "https://images.unsplash.com/photo-1465379944081-7f47de8d74ac?w=400&h=400&fit=crop",
-      category: "Flowering Plants",
-      rating: 4.7,
-      discount: 18,
-      inStock: false,
-      description: "Elegant flowering plant that purifies air"
-    },
-    {
-      id: 5,
-      name: "Rubber Plant",
-      price: 259,
-      originalPrice: 309,
-      image: "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=400&h=400&fit=crop",
-      category: "Indoor Plants",
-      rating: 4.5,
-      discount: 16,
-      inStock: true,
-      description: "Glossy-leaved plant that's easy to care for"
-    },
-    {
-      id: 6,
-      name: "Aloe Vera",
-      price: 129,
-      originalPrice: 159,
-      image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=400&h=400&fit=crop",
-      category: "Succulents",
-      rating: 4.8,
-      discount: 19,
-      inStock: true,
-      description: "Healing plant with medicinal properties"
-    }
-  ];
-
-  const categories = [
-    "Indoor Plants",
-    "Outdoor Plants",
-    "Flowering Plants",
-    "Succulents",
-    "Low Maintenance",
-    "Air Purifying"
-  ];
+  const allProducts = [...plants, ...comboPacks];
 
   const handleCategoryChange = (category: string, checked: boolean) => {
     if (checked) {
@@ -110,10 +28,18 @@ const Products = () => {
     }
   };
 
-  const filteredProducts = products.filter(product => {
+  const getProductPrice = (product: any) => {
+    if ('sizes' in product) {
+      return Math.min(...product.sizes.map(size => size.price));
+    }
+    return product.price;
+  };
+
+  const filteredProducts = allProducts.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(product.category);
-    const matchesPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
+    const productPrice = getProductPrice(product);
+    const matchesPrice = productPrice >= priceRange[0] && productPrice <= priceRange[1];
     
     return matchesSearch && matchesCategory && matchesPrice;
   });
@@ -194,7 +120,7 @@ const Products = () => {
                 <Slider
                   value={priceRange}
                   onValueChange={setPriceRange}
-                  max={1000}
+                  max={600}
                   min={0}
                   step={10}
                   className="mb-2"
@@ -209,7 +135,7 @@ const Products = () => {
               <div>
                 <h4 className="font-medium mb-3">Categories</h4>
                 <div className="space-y-3">
-                  {categories.map((category) => (
+                  {[...categories, "Combo Packs"].map((category) => (
                     <div key={category} className="flex items-center space-x-2">
                       <Checkbox
                         id={category}
@@ -230,7 +156,7 @@ const Products = () => {
           <div className="flex-1">
             <div className="mb-4 flex justify-between items-center">
               <p className="text-gray-600">
-                Showing {filteredProducts.length} of {products.length} products
+                Showing {filteredProducts.length} of {allProducts.length} products
               </p>
             </div>
 
@@ -240,7 +166,11 @@ const Products = () => {
                 : "grid-cols-1"
             }`}>
               {filteredProducts.map((product) => (
-                <Link key={product.id} to={`/product/${product.id}`} className="group">
+                <Link 
+                  key={product.id} 
+                  to={product.category === "Combo Packs" ? `/combo/${product.id}` : `/product/${product.id}`} 
+                  className="group"
+                >
                   <Card className={`overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${
                     viewMode === "list" ? "flex" : ""
                   }`}>
@@ -252,23 +182,11 @@ const Products = () => {
                           viewMode === "list" ? "w-full h-48" : "w-full h-64"
                         }`}
                       />
-                      {product.discount > 0 && (
+                      {product.category === "Combo Packs" && 'originalPrice' in product && (
                         <Badge className="absolute top-4 left-4 bg-red-500 text-white">
-                          {product.discount}% OFF
+                          Save ₹{product.originalPrice - product.price}
                         </Badge>
                       )}
-                      {!product.inStock && (
-                        <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                          <Badge variant="destructive">Out of Stock</Badge>
-                        </div>
-                      )}
-                      <Button 
-                        size="sm" 
-                        className="absolute top-4 right-4 bg-white/90 text-gray-700 hover:bg-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        disabled={!product.inStock}
-                      >
-                        <ShoppingCart className="h-4 w-4" />
-                      </Button>
                     </div>
                     
                     <CardContent className={`p-6 ${viewMode === "list" ? "flex-1" : ""}`}>
@@ -280,33 +198,45 @@ const Products = () => {
                       <h3 className="font-semibold text-lg text-gray-900 mb-2 group-hover:text-green-600 transition-colors">
                         {product.name}
                       </h3>
-                      {viewMode === "list" && (
-                        <p className="text-gray-600 mb-3">{product.description}</p>
+                      
+                      {product.category === "Combo Packs" && 'plants' in product && (
+                        <p className="text-sm text-gray-600 mb-3">
+                          Includes: {product.plants.join(', ')}
+                        </p>
                       )}
-                      <div className="flex items-center gap-1 mb-3">
-                        <div className="flex">
-                          {[1,2,3,4,5].map((i) => (
-                            <Star 
-                              key={i} 
-                              className={`h-4 w-4 ${i <= Math.floor(product.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} 
-                            />
-                          ))}
+                      
+                      {'rating' in product && (
+                        <div className="flex items-center gap-1 mb-3">
+                          <div className="flex">
+                            {[1,2,3,4,5].map((i) => (
+                              <Star 
+                                key={i} 
+                                className={`h-4 w-4 ${i <= Math.floor(product.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} 
+                              />
+                            ))}
+                          </div>
+                          <span className="text-sm text-gray-600">({product.rating})</span>
                         </div>
-                        <span className="text-sm text-gray-600">({product.rating})</span>
-                      </div>
+                      )}
+                      
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <span className="text-2xl font-bold text-green-600">₹{product.price}</span>
-                          {product.originalPrice > product.price && (
-                            <span className="text-lg text-gray-500 line-through">₹{product.originalPrice}</span>
+                          {product.category === "Combo Packs" ? (
+                            <>
+                              <span className="text-2xl font-bold text-green-600">₹{product.price}</span>
+                              {'originalPrice' in product && (
+                                <span className="text-lg text-gray-500 line-through">₹{product.originalPrice}</span>
+                              )}
+                            </>
+                          ) : (
+                            <span className="text-xl font-bold text-green-600">
+                              From ₹{getProductPrice(product)}
+                            </span>
                           )}
                         </div>
                         {viewMode === "list" && (
-                          <Button 
-                            className="bg-green-600 hover:bg-green-700"
-                            disabled={!product.inStock}
-                          >
-                            Add to Cart
+                          <Button className="bg-green-600 hover:bg-green-700">
+                            View Details
                           </Button>
                         )}
                       </div>
@@ -324,7 +254,7 @@ const Products = () => {
                   onClick={() => {
                     setSearchQuery("");
                     setSelectedCategories([]);
-                    setPriceRange([0, 1000]);
+                    setPriceRange([0, 600]);
                   }}
                 >
                   Clear Filters

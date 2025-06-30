@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ShoppingCart, Search, Menu, X, Leaf, User, Package, Star } from "lucide-react";
+import { ShoppingCart, Search, Menu, X, User } from "lucide-react";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,12 +16,19 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center">
-              <Leaf className="h-6 w-6 text-white" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-gray-900">Devakusuma</h1>
+          <Link to="/" className="flex items-center space-x-3">
+            <img 
+              src="/public/devakusuma-logo.png" 
+              alt="Devakusuma Nursery Garden" 
+              className="h-12 w-auto"
+              onError={(e) => {
+                // Fallback to text logo if image fails to load
+                e.currentTarget.style.display = 'none';
+                e.currentTarget.nextElementSibling?.classList.remove('hidden');
+              }}
+            />
+            <div className="hidden">
+              <h1 className="text-xl font-bold text-green-700">Devakusuma</h1>
               <p className="text-xs text-gray-600">Nursery Garden</p>
             </div>
           </Link>
@@ -37,7 +44,7 @@ const Navigation = () => {
             <Link to="/categories" className="text-gray-700 hover:text-green-600 font-medium transition-colors">
               Categories
             </Link>
-            <Link to="/care-guide" className="text-gray-700 hover:text-green-600 font-medium transition-colors">
+            <Link to="/plant-care" className="text-gray-700 hover:text-green-600 font-medium transition-colors">
               Plant Care
             </Link>
             <Link to="/about" className="text-gray-700 hover:text-green-600 font-medium transition-colors">
@@ -103,7 +110,7 @@ const Navigation = () => {
               Categories
             </Link>
             <Link 
-              to="/care-guide" 
+              to="/plant-care" 
               className="block text-gray-700 hover:text-green-600 font-medium py-2"
               onClick={() => setIsMenuOpen(false)}
             >
