@@ -33,7 +33,8 @@ export const plants: Plant[] = [
     name: "Ficus (All Types)",
     sizes: [
       { name: "Sapling", price: 25 },
-      { name: "Medium/Basic", price: 140 }
+      { name: "Medium", price: 140 },
+      { name: "Basic", price: 200 }
     ],
     image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=400&h=400&fit=crop",
     category: "Foliage & Decorative Plants",
@@ -47,7 +48,8 @@ export const plants: Plant[] = [
     name: "Areca Palm",
     sizes: [
       { name: "Sapling", price: 30 },
-      { name: "Medium/Basic", price: 185 }
+      { name: "Medium", price: 185 },
+      { name: "Basic", price: 250 }
     ],
     image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop",
     category: "Foliage & Decorative Plants",
@@ -61,7 +63,8 @@ export const plants: Plant[] = [
     name: "Crotons (Duck Foot, Gold Dust)",
     sizes: [
       { name: "Sapling", price: 30 },
-      { name: "Medium/Basic", price: 110 }
+      { name: "Medium", price: 110 },
+      { name: "Basic", price: 180 }
     ],
     image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=400&fit=crop",
     category: "Foliage & Decorative Plants",
@@ -75,7 +78,8 @@ export const plants: Plant[] = [
     name: "Thuja / Morpankhi",
     sizes: [
       { name: "Sapling", price: 40 },
-      { name: "Medium/Basic", price: 225 }
+      { name: "Medium", price: 225 },
+      { name: "Basic", price: 350 }
     ],
     image: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=400&h=400&fit=crop",
     category: "Foliage & Decorative Plants",
@@ -89,7 +93,8 @@ export const plants: Plant[] = [
     name: "Cordyline",
     sizes: [
       { name: "Sapling", price: 30 },
-      { name: "Medium/Basic", price: 150 }
+      { name: "Medium", price: 150 },
+      { name: "Basic", price: 220 }
     ],
     image: "https://images.unsplash.com/photo-1463320726281-696a485928c7?w=400&h=400&fit=crop",
     category: "Foliage & Decorative Plants",
@@ -103,7 +108,8 @@ export const plants: Plant[] = [
     name: "Dracaena Marginata",
     sizes: [
       { name: "Sapling", price: 40 },
-      { name: "Medium/Basic", price: 185 }
+      { name: "Medium", price: 185 },
+      { name: "Basic", price: 280 }
     ],
     image: "https://images.unsplash.com/photo-1583606663585-39573b6e0a13?w=400&h=400&fit=crop",
     category: "Foliage & Decorative Plants",
@@ -117,7 +123,8 @@ export const plants: Plant[] = [
     name: "Cycads",
     sizes: [
       { name: "Sapling", price: 115 },
-      { name: "Premium", price: 550 }
+      { name: "Medium", price: 350 },
+      { name: "Basic", price: 550 }
     ],
     image: "https://images.unsplash.com/photo-1604603662088-3beeacabb8ad?w=400&h=400&fit=crop",
     category: "Foliage & Decorative Plants",
@@ -131,7 +138,8 @@ export const plants: Plant[] = [
     name: "Snake Plant",
     sizes: [
       { name: "Sapling", price: 25 },
-      { name: "Medium/Basic", price: 115 }
+      { name: "Medium", price: 115 },
+      { name: "Basic", price: 180 }
     ],
     image: "https://images.unsplash.com/photo-1581595220892-b0739db3ba8c?w=400&h=400&fit=crop",
     category: "Air-Purifying Plants",
@@ -145,7 +153,8 @@ export const plants: Plant[] = [
     name: "ZZ Plant",
     sizes: [
       { name: "Sapling", price: 65 },
-      { name: "Medium/Basic", price: 275 }
+      { name: "Medium", price: 275 },
+      { name: "Basic", price: 400 }
     ],
     image: "https://images.unsplash.com/photo-1536882240095-0379873feb4e?w=400&h=400&fit=crop",
     category: "Air-Purifying Plants",
@@ -159,7 +168,8 @@ export const plants: Plant[] = [
     name: "Jade Plant",
     sizes: [
       { name: "Sapling", price: 18 },
-      { name: "Medium/Basic", price: 75 }
+      { name: "Medium", price: 75 },
+      { name: "Basic", price: 120 }
     ],
     image: "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=400&h=400&fit=crop",
     category: "Air-Purifying Plants",
@@ -173,7 +183,8 @@ export const plants: Plant[] = [
     name: "Spider Plant",
     sizes: [
       { name: "Sapling", price: 15 },
-      { name: "Medium/Basic", price: 80 }
+      { name: "Medium", price: 80 },
+      { name: "Basic", price: 130 }
     ],
     image: "https://images.unsplash.com/photo-1565011523534-747a8601de95?w=400&h=400&fit=crop",
     category: "Air-Purifying Plants",
@@ -187,7 +198,8 @@ export const plants: Plant[] = [
     name: "Ferns",
     sizes: [
       { name: "Sapling", price: 28 },
-      { name: "Hanging", price: 150 }
+      { name: "Medium", price: 120 },
+      { name: "Basic", price: 150 }
     ],
     image: "https://images.unsplash.com/photo-1585316829082-2a1dc8854e4e?w=400&h=400&fit=crop",
     category: "Foliage & Decorative Plants",
@@ -203,7 +215,8 @@ export const plants: Plant[] = [
     name: "Bougainvillea",
     sizes: [
       { name: "Sapling", price: 18 },
-      { name: "Market Size", price: 105 }
+      { name: "Medium", price: 105 },
+      { name: "Basic", price: 160 }
     ],
     image: "https://images.unsplash.com/photo-1598979997959-7750c5aa2378?w=400&h=400&fit=crop",
     category: "Flowering & Seasonal Plants",
@@ -217,7 +230,8 @@ export const plants: Plant[] = [
     name: "Hibiscus",
     sizes: [
       { name: "Sapling", price: 23 },
-      { name: "Market Size", price: 75 }
+      { name: "Medium", price: 75 },
+      { name: "Basic", price: 120 }
     ],
     image: "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=400&h=400&fit=crop",
     category: "Flowering & Seasonal Plants",
@@ -231,7 +245,8 @@ export const plants: Plant[] = [
     name: "Marigold (Seasonal)",
     sizes: [
       { name: "Sapling", price: 8 },
-      { name: "Market Size", price: 45 }
+      { name: "Medium", price: 45 },
+      { name: "Basic", price: 70 }
     ],
     image: "https://images.unsplash.com/photo-1601997357747-5394b3e6fb6c?w=400&h=400&fit=crop",
     category: "Flowering & Seasonal Plants",
@@ -245,7 +260,8 @@ export const plants: Plant[] = [
     name: "Chrysanthemum",
     sizes: [
       { name: "Sapling", price: 15 },
-      { name: "Market Size", price: 60 }
+      { name: "Medium", price: 60 },
+      { name: "Basic", price: 95 }
     ],
     image: "https://images.unsplash.com/photo-1574684891174-df6b02ab38d7?w=400&h=400&fit=crop",
     category: "Flowering & Seasonal Plants",
@@ -259,7 +275,8 @@ export const plants: Plant[] = [
     name: "Hybrid Roses",
     sizes: [
       { name: "Sapling", price: 30 },
-      { name: "Market Size", price: 115 }
+      { name: "Medium", price: 115 },
+      { name: "Basic", price: 180 }
     ],
     image: "https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=400&h=400&fit=crop",
     category: "Flowering & Seasonal Plants",
@@ -273,7 +290,8 @@ export const plants: Plant[] = [
     name: "Plumeria (Frangipani)",
     sizes: [
       { name: "Sapling", price: 50 },
-      { name: "Market Size", price: 225 }
+      { name: "Medium", price: 225 },
+      { name: "Basic", price: 350 }
     ],
     image: "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?w=400&h=400&fit=crop",
     category: "Flowering & Seasonal Plants",
@@ -287,7 +305,8 @@ export const plants: Plant[] = [
     name: "Money Plant (Outdoor)",
     sizes: [
       { name: "Sapling", price: 15 },
-      { name: "Resale Size", price: 60 }
+      { name: "Medium", price: 60 },
+      { name: "Basic", price: 95 }
     ],
     image: "https://images.unsplash.com/photo-1586771711050-1182295b5e6f?w=400&h=400&fit=crop",
     category: "Air-Purifying Plants",

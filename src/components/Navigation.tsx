@@ -18,7 +18,7 @@ const Navigation = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3">
             <img 
-              src="/public/devakusuma-logo.png" 
+              src="/lovable-uploads/825072ee-9557-4ff3-8edd-6e933304f68a.png" 
               alt="Devakusuma Nursery Garden" 
               className="h-12 w-auto"
               onError={(e) => {
@@ -40,9 +40,6 @@ const Navigation = () => {
             </Link>
             <Link to="/products" className="text-gray-700 hover:text-green-600 font-medium transition-colors">
               Plants
-            </Link>
-            <Link to="/categories" className="text-gray-700 hover:text-green-600 font-medium transition-colors">
-              Categories
             </Link>
             <Link to="/plant-care" className="text-gray-700 hover:text-green-600 font-medium transition-colors">
               Plant Care
@@ -101,13 +98,6 @@ const Navigation = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               Plants
-            </Link>
-            <Link 
-              to="/categories" 
-              className="block text-gray-700 hover:text-green-600 font-medium py-2"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Categories
             </Link>
             <Link 
               to="/plant-care" 

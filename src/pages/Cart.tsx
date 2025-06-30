@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { ShoppingCart, Plus, Minus, Trash2, ArrowLeft, Package, Truck } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import OrderSplashScreen from "@/components/OrderSplashScreen";
 import { toast } from "sonner";
 
 const Cart = () => {
@@ -15,7 +16,7 @@ const Cart = () => {
     {
       id: 1,
       name: "Monstera Deliciosa",
-      size: "Medium/Basic",
+      size: "Medium",
       price: 140,
       originalPrice: 185,
       image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=300&h=300&fit=crop",
@@ -35,7 +36,7 @@ const Cart = () => {
     {
       id: 3,
       name: "ZZ Plant",
-      size: "Medium/Basic",
+      size: "Basic",
       price: 275,
       originalPrice: 320,
       image: "https://images.unsplash.com/photo-1536882240095-0379873feb4e?w=300&h=300&fit=crop",
@@ -43,6 +44,8 @@ const Cart = () => {
       inStock: false
     }
   ]);
+
+  const [showSplashScreen, setShowSplashScreen] = useState(false);
 
   const updateQuantity = (id: number, newQuantity: number) => {
     if (newQuantity === 0) {
@@ -70,6 +73,12 @@ const Cart = () => {
   const total = subtotal + deliveryFee;
 
   const handlePlaceOrder = () => {
+    setShowSplashScreen(true);
+  };
+
+  const handleSplashComplete = () => {
+    setShowSplashScreen(false);
+    
     // Compile order details
     const orderDetails = {
       items: cartItems.filter(item => item.inStock),
@@ -95,6 +104,10 @@ const Cart = () => {
     message += `Subtotal: ₹${orderDetails.subtotal}\n`;
     message += `Delivery: ${orderDetails.deliveryFee === 0 ? 'FREE' : `₹${orderDetails.deliveryFee}`}\n`;
     message += `*Total Amount: ₹${orderDetails.total}*\n\n`;
+    message += `📞 Contact Numbers:\n`;
+    message += `• 8870751384\n`;
+    message += `• 8074525253\n`;
+    message += `• 9133229522\n\n`;
     message += `Please confirm this order and provide delivery details. Thank you! 🙏`;
 
     // Encode message for WhatsApp URL
@@ -119,7 +132,7 @@ const Cart = () => {
               Looks like you haven't added any plants to your cart yet.
             </p>
             <Link to="/products">
-              <Button size="lg" className="bg-green-600 hover:bg-green-700">
+              <Button size="lg" className="bg-green-600 hover:bg-green-700 transform hover:scale-105 transition-all duration-300">
                 Continue Shopping
               </Button>
             </Link>
@@ -134,9 +147,14 @@ const Cart = () => {
     <div className="min-h-screen bg-gray-50">
       <Navigation />
       
+      <OrderSplashScreen 
+        isVisible={showSplashScreen} 
+        onComplete={handleSplashComplete} 
+      />
+      
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="mb-8">
-          <Link to="/products" className="flex items-center text-green-600 hover:text-green-700 mb-4">
+          <Link to="/products" className="flex items-center text-green-600 hover:text-green-700 mb-4 transform hover:scale-105 transition-all duration-300">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Continue Shopping
           </Link>
@@ -148,7 +166,7 @@ const Cart = () => {
           {/* Cart Items */}
           <div className="lg:col-span-2 space-y-4">
             {cartItems.map((item) => (
-              <Card key={item.id} className="overflow-hidden">
+              <Card key={item.id} className="overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
                 <CardContent className="p-6">
                   <div className="flex gap-6">
                     <div className="relative">
@@ -180,7 +198,7 @@ const Cart = () => {
                           variant="ghost"
                           size="sm"
                           onClick={() => removeItem(item.id)}
-                          className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                          className="text-red-600 hover:text-red-700 hover:bg-red-50 transform hover:scale-110 transition-all duration-300"
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -192,7 +210,7 @@ const Cart = () => {
                             variant="ghost"
                             size="sm"
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            className="px-3"
+                            className="px-3 hover:bg-green-50"
                             disabled={!item.inStock}
                           >
                             <Minus className="h-4 w-4" />
@@ -202,7 +220,7 @@ const Cart = () => {
                             variant="ghost"
                             size="sm"
                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            className="px-3"
+                            className="px-3 hover:bg-green-50"
                             disabled={!item.inStock}
                           >
                             <Plus className="h-4 w-4" />
@@ -237,7 +255,7 @@ const Cart = () => {
 
           {/* Order Summary */}
           <div className="space-y-6">
-            <Card>
+            <Card className="hover:shadow-lg transition-all duration-300">
               <CardContent className="p-6">
                 <h3 className="text-xl font-bold text-gray-900 mb-6">Order Summary</h3>
                 
@@ -275,7 +293,7 @@ const Cart = () => {
                 
                 <Button 
                   onClick={handlePlaceOrder}
-                  className="w-full mt-6 bg-green-600 hover:bg-green-700 text-white py-4 text-lg"
+                  className="w-full mt-6 bg-green-600 hover:bg-green-700 text-white py-4 text-lg transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
                   disabled={cartItems.some(item => !item.inStock)}
                 >
                   Place Order
@@ -290,7 +308,7 @@ const Cart = () => {
             </Card>
             
             {/* Delivery Info */}
-            <Card>
+            <Card className="hover:shadow-lg transition-all duration-300">
               <CardContent className="p-6">
                 <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
                   <Truck className="h-5 w-5 mr-2 text-green-600" />
@@ -308,6 +326,14 @@ const Cart = () => {
                   <div className="flex items-start gap-2">
                     <Package className="h-4 w-4 mt-0.5 text-green-600 flex-shrink-0" />
                     <span>Free delivery on orders above ₹500</span>
+                  </div>
+                  <div className="border-t pt-3 mt-3">
+                    <p className="font-medium text-gray-900 mb-2">Contact Numbers:</p>
+                    <div className="space-y-1">
+                      <p>📞 8870751384</p>
+                      <p>📞 8074525253</p>
+                      <p>📞 9133229522</p>
+                    </div>
                   </div>
                 </div>
               </CardContent>

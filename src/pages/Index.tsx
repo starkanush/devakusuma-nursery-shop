@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Search, ShoppingCart, Leaf, Star, ArrowRight, Package, CheckCircle, Users } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { categories } from "@/data/plants";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -54,13 +55,31 @@ const Index = () => {
     }
   ];
 
-  const categories = [
-    { name: "Indoor Plants", icon: "🏠", count: 150 },
-    { name: "Outdoor Plants", icon: "🌳", count: 200 },
-    { name: "Flowering Plants", icon: "🌸", count: 80 },
-    { name: "Succulents", icon: "🌵", count: 60 },
-    { name: "Herbs & Vegetables", icon: "🌿", count: 45 },
-    { name: "Seeds", icon: "🌱", count: 120 }
+  const categoryData = [
+    { 
+      name: "Foliage & Decorative Plants", 
+      icon: "🌱", 
+      count: 12,
+      image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=300&h=300&fit=crop"
+    },
+    { 
+      name: "Flowering & Seasonal Plants", 
+      icon: "🌸", 
+      count: 6,
+      image: "https://images.unsplash.com/photo-1598979997959-7750c5aa2378?w=300&h=300&fit=crop"
+    },
+    { 
+      name: "Air-Purifying Plants", 
+      icon: "🌿", 
+      count: 4,
+      image: "https://images.unsplash.com/photo-1581595220892-b0739db3ba8c?w=300&h=300&fit=crop"
+    },
+    { 
+      name: "Combo Packs", 
+      icon: "📦", 
+      count: 4,
+      image: "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=300&h=300&fit=crop"
+    }
   ];
 
   const stats = [
@@ -81,7 +100,7 @@ const Index = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               <div className="space-y-4">
-                <Badge className="bg-green-100 text-green-800 hover:bg-green-200">
+                <Badge className="bg-green-100 text-green-800 hover:bg-green-200 transform hover:scale-105 transition-all duration-300">
                   <Leaf className="h-4 w-4 mr-2" />
                   Premium Quality Plants
                 </Badge>
@@ -96,11 +115,11 @@ const Index = () => {
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-lg">
+                <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-lg transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
                   Shop Plants Now
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-                <Button variant="outline" size="lg" className="border-green-600 text-green-600 hover:bg-green-50 px-8 py-4 text-lg">
+                <Button variant="outline" size="lg" className="border-green-600 text-green-600 hover:bg-green-50 px-8 py-4 text-lg transform hover:scale-105 transition-all duration-300">
                   Plant Care Guide
                 </Button>
               </div>
@@ -108,7 +127,7 @@ const Index = () => {
               <div className="flex items-center gap-6 pt-4">
                 <div className="flex -space-x-2">
                   {[1,2,3,4].map((i) => (
-                    <div key={i} className="w-10 h-10 rounded-full bg-green-200 border-2 border-white flex items-center justify-center">
+                    <div key={i} className="w-10 h-10 rounded-full bg-green-200 border-2 border-white flex items-center justify-center animate-pulse">
                       <Leaf className="h-4 w-4 text-green-600" />
                     </div>
                   ))}
@@ -138,7 +157,7 @@ const Index = () => {
                   className="rounded-2xl shadow-xl transform -rotate-2 hover:rotate-0 transition-transform duration-300 mt-8"
                 />
               </div>
-              <div className="absolute -bottom-4 -left-4 bg-white p-4 rounded-xl shadow-lg">
+              <div className="absolute -bottom-4 -left-4 bg-white p-4 rounded-xl shadow-lg animate-bounce">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
                   <span className="text-sm font-medium">1,200+ Plants in Stock</span>
@@ -152,16 +171,16 @@ const Index = () => {
       {/* Search Section */}
       <section className="py-12 px-4 bg-white">
         <div className="max-w-4xl mx-auto">
-          <div className="relative">
+          <div className="relative transform hover:scale-102 transition-transform duration-300">
             <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-6 w-6" />
             <input
               type="text"
               placeholder="Search for plants, seeds, or garden supplies..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-6 py-4 text-lg border-2 border-gray-200 rounded-full focus:border-green-500 focus:outline-none shadow-lg"
+              className="w-full pl-12 pr-6 py-4 text-lg border-2 border-gray-200 rounded-full focus:border-green-500 focus:outline-none shadow-lg focus:shadow-xl transition-all duration-300"
             />
-            <Button className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-green-600 hover:bg-green-700 rounded-full px-8">
+            <Button className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-green-600 hover:bg-green-700 rounded-full px-8 hover:scale-105 transition-all duration-300">
               Search
             </Button>
           </div>
@@ -176,16 +195,28 @@ const Index = () => {
             <p className="text-xl text-gray-600">Find the perfect plants for your space</p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-            {categories.map((category, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {categoryData.map((category, index) => (
               <Link key={index} to="/products" className="group">
-                <Card className="hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border-2 hover:border-green-200">
+                <Card className="hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-4 border-2 hover:border-green-200 overflow-hidden">
+                  <div className="relative">
+                    <img 
+                      src={category.image} 
+                      alt={category.name}
+                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute top-4 right-4 text-4xl group-hover:scale-125 transition-transform duration-300">
+                      {category.icon}
+                    </div>
+                  </div>
                   <CardContent className="p-6 text-center">
-                    <div className="text-4xl mb-4">{category.icon}</div>
-                    <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-green-600 transition-colors">
+                    <h3 className="font-semibold text-lg text-gray-900 mb-2 group-hover:text-green-600 transition-colors duration-300">
                       {category.name}
                     </h3>
-                    <p className="text-sm text-gray-600">{category.count} items</p>
+                    <p className="text-sm text-gray-600 group-hover:text-gray-800 transition-colors duration-300">
+                      {category.count} items available
+                    </p>
                   </CardContent>
                 </Card>
               </Link>
@@ -205,19 +236,19 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {featuredPlants.map((plant) => (
               <Link key={plant.id} to={`/product/${plant.id}`} className="group">
-                <Card className="overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                <Card className="overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-4 hover:rotate-1">
                   <div className="relative">
                     <img 
                       src={plant.image} 
                       alt={plant.name}
-                      className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
                     />
-                    <Badge className="absolute top-4 left-4 bg-red-500 text-white">
+                    <Badge className="absolute top-4 left-4 bg-red-500 text-white animate-pulse">
                       {plant.discount}% OFF
                     </Badge>
                     <Button 
                       size="sm" 
-                      className="absolute top-4 right-4 bg-white/90 text-gray-700 hover:bg-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      className="absolute top-4 right-4 bg-white/90 text-gray-700 hover:bg-white opacity-0 group-hover:opacity-100 transition-all duration-300 transform hover:scale-110"
                     >
                       <ShoppingCart className="h-4 w-4" />
                     </Button>
@@ -228,7 +259,7 @@ const Index = () => {
                         {plant.category}
                       </Badge>
                     </div>
-                    <h3 className="font-semibold text-lg text-gray-900 mb-2 group-hover:text-green-600 transition-colors">
+                    <h3 className="font-semibold text-lg text-gray-900 mb-2 group-hover:text-green-600 transition-colors duration-300">
                       {plant.name}
                     </h3>
                     <div className="flex items-center gap-1 mb-3">
@@ -236,7 +267,7 @@ const Index = () => {
                         {[1,2,3,4,5].map((i) => (
                           <Star 
                             key={i} 
-                            className={`h-4 w-4 ${i <= Math.floor(plant.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} 
+                            className={`h-4 w-4 ${i <= Math.floor(plant.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'} transition-colors duration-300`} 
                           />
                         ))}
                       </div>
@@ -256,7 +287,7 @@ const Index = () => {
           
           <div className="text-center mt-12">
             <Link to="/products">
-              <Button size="lg" variant="outline" className="border-green-600 text-green-600 hover:bg-green-50 px-8">
+              <Button size="lg" variant="outline" className="border-green-600 text-green-600 hover:bg-green-50 px-8 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
                 View All Plants
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
@@ -270,8 +301,8 @@ const Index = () => {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
-              <div key={index} className="text-center text-white">
-                <div className="flex justify-center mb-4 text-green-200">
+              <div key={index} className="text-center text-white transform hover:scale-110 transition-all duration-300">
+                <div className="flex justify-center mb-4 text-green-200 animate-pulse">
                   {stat.icon}
                 </div>
                 <div className="text-3xl lg:text-4xl font-bold mb-2">{stat.number}</div>
@@ -291,24 +322,24 @@ const Index = () => {
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center p-8">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="text-center p-8 transform hover:scale-105 transition-all duration-300">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 hover:bg-green-200 transition-colors duration-300">
                 <Leaf className="h-8 w-8 text-green-600" />
               </div>
               <h3 className="text-xl font-semibold mb-4">Premium Quality</h3>
               <p className="text-gray-600">Hand-selected, healthy plants from certified growers with quality guarantee.</p>
             </div>
             
-            <div className="text-center p-8">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="text-center p-8 transform hover:scale-105 transition-all duration-300">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 hover:bg-green-200 transition-colors duration-300">
                 <Package className="h-8 w-8 text-green-600" />
               </div>
               <h3 className="text-xl font-semibold mb-4">Safe Delivery</h3>
               <p className="text-gray-600">Secure packaging and fast delivery to ensure your plants arrive in perfect condition.</p>
             </div>
             
-            <div className="text-center p-8">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="text-center p-8 transform hover:scale-105 transition-all duration-300">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 hover:bg-green-200 transition-colors duration-300">
                 <CheckCircle className="h-8 w-8 text-green-600" />
               </div>
               <h3 className="text-xl font-semibold mb-4">Expert Support</h3>
