@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -9,7 +10,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Search, ShoppingCart, Star, Filter, Grid, List } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { plants, comboPacks, categories } from "@/data/plants";
+import { plants, comboPacks, categories, Plant, ComboPack } from "@/data/plants";
+
+type ProductType = Plant | ComboPack;
 
 const Products = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -18,7 +21,7 @@ const Products = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState("featured");
 
-  const allProducts = [...plants, ...comboPacks];
+  const allProducts: ProductType[] = [...plants, ...comboPacks];
 
   const handleCategoryChange = (category: string, checked: boolean) => {
     if (checked) {
@@ -28,11 +31,19 @@ const Products = () => {
     }
   };
 
-  const getProductPrice = (product: any) => {
+  const getProductPrice = (product: ProductType) => {
     if ('sizes' in product) {
       return Math.min(...product.sizes.map(size => size.price));
     }
     return product.price;
+  };
+
+  const isPlant = (product: ProductType): product is Plant => {
+    return 'sizes' in product;
+  };
+
+  const isComboPack = (product: ProductType): product is ComboPack => {
+    return 'plants' in product;
   };
 
   const filteredProducts = allProducts.filter(product => {
@@ -135,7 +146,7 @@ const Products = () => {
               <div>
                 <h4 className="font-medium mb-3">Categories</h4>
                 <div className="space-y-3">
-                  {[...categories, "Combo Packs"].map((category) => (
+                  {categories.map((category) => (
                     <div key={category} className="flex items-center space-x-2">
                       <Checkbox
                         id={category}
@@ -168,7 +179,7 @@ const Products = () => {
               {filteredProducts.map((product) => (
                 <Link 
                   key={product.id} 
-                  to={product.category === "Combo Packs" ? `/combo/${product.id}` : `/product/${product.id}`} 
+                  to={isComboPack(product) ? `/combo/${product.id}` : `/product/${product.id}`} 
                   className="group"
                 >
                   <Card className={`overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${
@@ -182,7 +193,7 @@ const Products = () => {
                           viewMode === "list" ? "w-full h-48" : "w-full h-64"
                         }`}
                       />
-                      {product.category === "Combo Packs" && 'originalPrice' in product && (
+                      {isComboPack(product) && (
                         <Badge className="absolute top-4 left-4 bg-red-500 text-white">
                           Save ₹{product.originalPrice - product.price}
                         </Badge>
@@ -199,13 +210,13 @@ const Products = () => {
                         {product.name}
                       </h3>
                       
-                      {product.category === "Combo Packs" && 'plants' in product && (
+                      {isComboPack(product) && (
                         <p className="text-sm text-gray-600 mb-3">
                           Includes: {product.plants.join(', ')}
                         </p>
                       )}
                       
-                      {'rating' in product && (
+                      {isPlant(product) && (
                         <div className="flex items-center gap-1 mb-3">
                           <div className="flex">
                             {[1,2,3,4,5].map((i) => (
@@ -221,12 +232,10 @@ const Products = () => {
                       
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          {product.category === "Combo Packs" ? (
+                          {isComboPack(product) ? (
                             <>
                               <span className="text-2xl font-bold text-green-600">₹{product.price}</span>
-                              {'originalPrice' in product && (
-                                <span className="text-lg text-gray-500 line-through">₹{product.originalPrice}</span>
-                              )}
+                              <span className="text-lg text-gray-500 line-through">₹{product.originalPrice}</span>
                             </>
                           ) : (
                             <span className="text-xl font-bold text-green-600">

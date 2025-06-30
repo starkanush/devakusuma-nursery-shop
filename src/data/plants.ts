@@ -1,4 +1,3 @@
-
 export interface PlantSize {
   name: string;
   price: number;
@@ -14,6 +13,17 @@ export interface Plant {
   inStock: boolean;
   description: string;
   careLevel: string;
+}
+
+export interface ComboPack {
+  id: number;
+  name: string;
+  plants: string[];
+  price: number;
+  originalPrice: number;
+  image: string;
+  category: string;
+  description: string;
 }
 
 export const plants: Plant[] = [
@@ -288,7 +298,7 @@ export const plants: Plant[] = [
   }
 ];
 
-export const comboPacks = [
+export const comboPacks: ComboPack[] = [
   {
     id: 101,
     name: "Air Purifier Pack",
@@ -296,6 +306,7 @@ export const comboPacks = [
     price: 275,
     originalPrice: 320,
     image: "https://images.unsplash.com/photo-1581595220892-b0739db3ba8c?w=400&h=400&fit=crop",
+    category: "Combo Packs",
     description: "Perfect combination of air-purifying plants for healthier indoor air."
   },
   {
@@ -305,6 +316,7 @@ export const comboPacks = [
     price: 165,
     originalPrice: 200,
     image: "https://images.unsplash.com/photo-1598979997959-7750c5aa2378?w=400&h=400&fit=crop",
+    category: "Combo Packs",
     description: "Colorful flowering plants perfect for festivals and celebrations."
   },
   {
@@ -314,6 +326,7 @@ export const comboPacks = [
     price: 225,
     originalPrice: 280,
     image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=400&fit=crop",
+    category: "Combo Packs",
     description: "Ideal starter pack for creating a beautiful balcony garden."
   },
   {
@@ -323,6 +336,7 @@ export const comboPacks = [
     price: 100,
     originalPrice: 135,
     image: "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=400&h=400&fit=crop",
+    category: "Combo Packs",
     description: "Perfect small gifting pack with lucky plants in decorative pots."
   }
 ];
