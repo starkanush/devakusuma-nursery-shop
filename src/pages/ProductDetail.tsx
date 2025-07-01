@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -105,7 +104,7 @@ const ProductDetail = () => {
       plant_name: product.name,
       plant_image: images[0],
       price: selectedSize.price,
-      original_price: selectedSize.originalPrice || selectedSize.price,
+      original_price: selectedSize.price,
       size: selectedSize.name,
       quantity: quantity
     });
