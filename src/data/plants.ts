@@ -1,3 +1,4 @@
+
 export interface PlantSize {
   name: string;
   price: number;
@@ -36,7 +37,7 @@ export const plants: Plant[] = [
       { name: "Medium", price: 140 },
       { name: "Basic", price: 200 }
     ],
-    image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=400&h=400&fit=crop",
     category: "Foliage & Decorative Plants",
     rating: 4.5,
     inStock: true,
@@ -51,7 +52,7 @@ export const plants: Plant[] = [
       { name: "Medium", price: 185 },
       { name: "Basic", price: 250 }
     ],
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=400&h=400&fit=crop",
     category: "Foliage & Decorative Plants",
     rating: 4.7,
     inStock: true,
@@ -81,7 +82,7 @@ export const plants: Plant[] = [
       { name: "Medium", price: 225 },
       { name: "Basic", price: 350 }
     ],
-    image: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=400&h=400&fit=crop",
     category: "Foliage & Decorative Plants",
     rating: 4.6,
     inStock: true,
@@ -96,7 +97,7 @@ export const plants: Plant[] = [
       { name: "Medium", price: 150 },
       { name: "Basic", price: 220 }
     ],
-    image: "https://images.unsplash.com/photo-1463320726281-696a485928c7?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=400&h=400&fit=crop",
     category: "Foliage & Decorative Plants",
     rating: 4.3,
     inStock: true,
@@ -126,7 +127,7 @@ export const plants: Plant[] = [
       { name: "Medium", price: 350 },
       { name: "Basic", price: 550 }
     ],
-    image: "https://images.unsplash.com/photo-1604603662088-3beeacabb8ad?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=400&h=400&fit=crop",
     category: "Foliage & Decorative Plants",
     rating: 4.9,
     inStock: true,
@@ -141,7 +142,7 @@ export const plants: Plant[] = [
       { name: "Medium", price: 115 },
       { name: "Basic", price: 180 }
     ],
-    image: "https://images.unsplash.com/photo-1581595220892-b0739db3ba8c?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1593691509543-c55fb32d8de5?w=400&h=400&fit=crop",
     category: "Air-Purifying Plants",
     rating: 4.9,
     inStock: true,
@@ -156,7 +157,7 @@ export const plants: Plant[] = [
       { name: "Medium", price: 275 },
       { name: "Basic", price: 400 }
     ],
-    image: "https://images.unsplash.com/photo-1536882240095-0379873feb4e?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1586084715209-8d10e8e1c2b5?w=400&h=400&fit=crop",
     category: "Air-Purifying Plants",
     rating: 4.8,
     inStock: true,
@@ -248,7 +249,7 @@ export const plants: Plant[] = [
       { name: "Medium", price: 45 },
       { name: "Basic", price: 70 }
     ],
-    image: "https://images.unsplash.com/photo-1601997357747-5394b3e6fb6c?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=400&h=400&fit=crop",
     category: "Flowering & Seasonal Plants",
     rating: 4.3,
     inStock: true,
@@ -308,7 +309,7 @@ export const plants: Plant[] = [
       { name: "Medium", price: 60 },
       { name: "Basic", price: 95 }
     ],
-    image: "https://images.unsplash.com/photo-1586771711050-1182295b5e6f?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=400&h=400&fit=crop",
     category: "Air-Purifying Plants",
     rating: 4.5,
     inStock: true,
@@ -324,7 +325,7 @@ export const comboPacks: ComboPack[] = [
     plants: ["Snake Plant", "Spider Plant", "Dracaena Marginata"],
     price: 275,
     originalPrice: 320,
-    image: "https://images.unsplash.com/photo-1581595220892-b0739db3ba8c?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1593691509543-c55fb32d8de5?w=400&h=400&fit=crop",
     category: "Combo Packs",
     description: "Perfect combination of air-purifying plants for healthier indoor air."
   },
@@ -334,7 +335,7 @@ export const comboPacks: ComboPack[] = [
     plants: ["Marigold", "Hibiscus", "Bougainvillea"],
     price: 165,
     originalPrice: 200,
-    image: "https://images.unsplash.com/photo-1598979997959-7750c5aa2378?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=400&h=400&fit=crop",
     category: "Combo Packs",
     description: "Colorful flowering plants perfect for festivals and celebrations."
   },

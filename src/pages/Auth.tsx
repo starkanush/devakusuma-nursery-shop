@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -11,6 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import LoginSuccessSplash from "@/components/LoginSuccessSplash";
 
 const Auth = () => {
   const [email, setEmail] = useState("");
@@ -46,11 +46,6 @@ const Auth = () => {
     } else {
       toast.success("Successfully signed in!");
       setShowSuccessSplash(true);
-      // Navigate to cart after splash screen
-      setTimeout(() => {
-        setShowSuccessSplash(false);
-        navigate("/cart");
-      }, 1000);
     }
     setLoading(false);
   };
@@ -81,29 +76,19 @@ const Auth = () => {
     setLoading(false);
   };
 
-  const SuccessSplash = () => (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center">
-      <Card className="w-full max-w-md mx-4 animate-scale-in">
-        <CardContent className="p-8 text-center">
-          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
-            <CheckCircle className="h-10 w-10 text-green-600" />
-          </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            Successfully Logged In!
-          </h2>
-          <p className="text-gray-600">
-            Redirecting to your cart...
-          </p>
-        </CardContent>
-      </Card>
-    </div>
-  );
+  const handleSplashComplete = () => {
+    setShowSuccessSplash(false);
+    navigate("/cart");
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50">
       <Navigation />
       
-      {showSuccessSplash && <SuccessSplash />}
+      <LoginSuccessSplash 
+        isVisible={showSuccessSplash} 
+        onComplete={handleSplashComplete} 
+      />
       
       <div className="flex items-center justify-center py-16 px-4">
         <div className="w-full max-w-md">
