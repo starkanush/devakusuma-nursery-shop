@@ -1,5 +1,4 @@
 
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,65 +8,18 @@ import { ShoppingCart, Plus, Minus, Trash2, ArrowLeft, Package, Truck } from "lu
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import OrderSplashScreen from "@/components/OrderSplashScreen";
+import { useCart } from "@/contexts/CartContext";
+import { useAuth } from "@/hooks/useAuth";
+import { useState } from "react";
 import { toast } from "sonner";
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Monstera Deliciosa",
-      size: "Medium",
-      price: 140,
-      originalPrice: 185,
-      image: "https://images.unsplash.com/photo-1587897689715-9eae8b81b68f?w=300&h=300&fit=crop",
-      quantity: 2,
-      inStock: true
-    },
-    {
-      id: 2,
-      name: "Snake Plant",
-      size: "Sapling",
-      price: 25,
-      originalPrice: 35,
-      image: "https://images.unsplash.com/photo-1593691509543-c55fb32d8de5?w=300&h=300&fit=crop",
-      quantity: 1,
-      inStock: true
-    },
-    {
-      id: 3,
-      name: "ZZ Plant",
-      size: "Basic",
-      price: 275,
-      originalPrice: 320,
-      image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=300&h=300&fit=crop",
-      quantity: 1,
-      inStock: false
-    }
-  ]);
-
+  const { cartItems, updateQuantity, removeFromCart, loading } = useCart();
+  const { user } = useAuth();
   const [showSplashScreen, setShowSplashScreen] = useState(false);
 
-  const updateQuantity = (id: number, newQuantity: number) => {
-    if (newQuantity === 0) {
-      removeItem(id);
-      return;
-    }
-    
-    setCartItems(items =>
-      items.map(item =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
-    );
-    toast.success("Cart updated!");
-  };
-
-  const removeItem = (id: number) => {
-    setCartItems(items => items.filter(item => item.id !== id));
-    toast.success("Item removed from cart!");
-  };
-
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const originalTotal = cartItems.reduce((sum, item) => sum + (item.originalPrice * item.quantity), 0);
+  const originalTotal = cartItems.reduce((sum, item) => sum + (item.original_price * item.quantity), 0);
   const savings = originalTotal - subtotal;
   const deliveryFee = subtotal >= 500 ? 0 : 50;
   const total = subtotal + deliveryFee;
@@ -81,7 +33,7 @@ const Cart = () => {
     
     // Compile order details
     const orderDetails = {
-      items: cartItems.filter(item => item.inStock),
+      items: cartItems,
       subtotal,
       deliveryFee,
       total: subtotal + deliveryFee,
@@ -94,7 +46,7 @@ const Cart = () => {
     message += `🛒 *Order Items:*\n`;
     
     orderDetails.items.forEach((item, index) => {
-      message += `${index + 1}. ${item.name} (${item.size})\n`;
+      message += `${index + 1}. ${item.plant_name} (${item.size})\n`;
       message += `   Quantity: ${item.quantity}\n`;
       message += `   Price: ₹${item.price} each\n`;
       message += `   Total: ₹${item.price * item.quantity}\n\n`;
@@ -118,6 +70,44 @@ const Cart = () => {
     
     toast.success("Order details sent to WhatsApp!");
   };
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Navigation />
+        <div className="max-w-4xl mx-auto px-4 py-16">
+          <div className="text-center">
+            <ShoppingCart className="h-24 w-24 text-gray-400 mx-auto mb-6" />
+            <h1 className="text-3xl font-bold text-gray-900 mb-4">Please sign in to view your cart</h1>
+            <p className="text-xl text-gray-600 mb-8">
+              You need to be signed in to manage your shopping cart.
+            </p>
+            <Link to="/auth">
+              <Button size="lg" className="bg-green-600 hover:bg-green-700 transform hover:scale-105 transition-all duration-300">
+                Sign In
+              </Button>
+            </Link>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Navigation />
+        <div className="max-w-4xl mx-auto px-4 py-16">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-green-600 mx-auto"></div>
+            <p className="text-xl text-gray-600 mt-4">Loading your cart...</p>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   if (cartItems.length === 0) {
     return (
@@ -170,33 +160,26 @@ const Cart = () => {
                   <div className="flex gap-6">
                     <div className="relative">
                       <img 
-                        src={item.image} 
-                        alt={item.name}
+                        src={item.plant_image} 
+                        alt={item.plant_name}
                         className="w-24 h-24 object-cover rounded-lg"
                       />
-                      {!item.inStock && (
-                        <div className="absolute inset-0 bg-black/50 rounded-lg flex items-center justify-center">
-                          <Badge variant="destructive" className="text-xs">
-                            Out of Stock
-                          </Badge>
-                        </div>
-                      )}
                     </div>
                     
                     <div className="flex-1">
                       <div className="flex justify-between items-start mb-2">
                         <div>
-                          <h3 className="font-semibold text-lg text-gray-900">{item.name}</h3>
+                          <h3 className="font-semibold text-lg text-gray-900">{item.plant_name}</h3>
                           <p className="text-sm text-gray-600 mb-1">Size: {item.size}</p>
                           <div className="flex items-center gap-2">
                             <span className="text-xl font-bold text-green-600">₹{item.price}</span>
-                            <span className="text-sm text-gray-500 line-through">₹{item.originalPrice}</span>
+                            <span className="text-sm text-gray-500 line-through">₹{item.original_price}</span>
                           </div>
                         </div>
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => removeItem(item.id)}
+                          onClick={() => removeFromCart(item.id)}
                           className="text-red-600 hover:text-red-700 hover:bg-red-50 transform hover:scale-110 transition-all duration-300"
                         >
                           <Trash2 className="h-4 w-4" />
@@ -210,7 +193,6 @@ const Cart = () => {
                             size="sm"
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
                             className="px-3 hover:bg-green-50"
-                            disabled={!item.inStock}
                           >
                             <Minus className="h-4 w-4" />
                           </Button>
@@ -220,7 +202,6 @@ const Cart = () => {
                             size="sm"
                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
                             className="px-3 hover:bg-green-50"
-                            disabled={!item.inStock}
                           >
                             <Plus className="h-4 w-4" />
                           </Button>
@@ -230,21 +211,13 @@ const Cart = () => {
                           <div className="text-lg font-bold text-gray-900">
                             ₹{item.price * item.quantity}
                           </div>
-                          {item.originalPrice > item.price && (
+                          {item.original_price > item.price && (
                             <div className="text-sm text-gray-500">
-                              Save ₹{(item.originalPrice - item.price) * item.quantity}
+                              Save ₹{(item.original_price - item.price) * item.quantity}
                             </div>
                           )}
                         </div>
                       </div>
-                      
-                      {!item.inStock && (
-                        <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg">
-                          <p className="text-sm text-red-800">
-                            This item is currently out of stock. Remove it from your cart or check back later.
-                          </p>
-                        </div>
-                      )}
                     </div>
                   </div>
                 </CardContent>
@@ -293,7 +266,6 @@ const Cart = () => {
                 <Button 
                   onClick={handlePlaceOrder}
                   className="w-full mt-6 bg-green-600 hover:bg-green-700 text-white py-4 text-lg transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
-                  disabled={cartItems.some(item => !item.inStock)}
                 >
                   Place Order
                 </Button>

@@ -4,37 +4,20 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ShoppingCart, Search, Menu, X, User, LogOut } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
+import { useCart } from "@/contexts/CartContext";
 import { toast } from "sonner";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [cartItems] = useState(0); // Start with empty cart
-  const [user, setUser] = useState(null);
+  const { user, signOut } = useAuth();
+  const { cartCount } = useCart();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // Get initial session
-    const getSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setUser(session?.user ?? null);
-    };
-    getSession();
-
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setUser(session?.user ?? null);
-      }
-    );
-
-    return () => subscription.unsubscribe();
-  }, []);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const handleSignOut = async () => {
-    const { error } = await supabase.auth.signOut();
+    const { error } = await signOut();
     if (error) {
       toast.error("Error signing out");
     } else {
@@ -105,9 +88,9 @@ const Navigation = () => {
             <Link to="/cart">
               <Button variant="ghost" size="sm" className="relative">
                 <ShoppingCart className="h-5 w-5" />
-                {cartItems > 0 && (
+                {cartCount > 0 && (
                   <Badge className="absolute -top-2 -right-2 bg-green-600 text-white text-xs h-5 w-5 flex items-center justify-center rounded-full">
-                    {cartItems}
+                    {cartCount}
                   </Badge>
                 )}
               </Button>
