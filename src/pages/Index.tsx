@@ -18,7 +18,7 @@ const Index = () => {
       name: "Monstera Deliciosa",
       price: 299,
       originalPrice: 399,
-      image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1587897689715-9eae8b81b68f?w=400&h=400&fit=crop",
       category: "Indoor Plants",
       rating: 4.8,
       discount: 25
@@ -28,7 +28,7 @@ const Index = () => {
       name: "Fiddle Leaf Fig",
       price: 449,
       originalPrice: 549,
-      image: "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1462905245-7bd18cd8a2b4?w=400&h=400&fit=crop",
       category: "Indoor Plants",
       rating: 4.6,
       discount: 18
@@ -38,7 +38,7 @@ const Index = () => {
       name: "Snake Plant",
       price: 199,
       originalPrice: 249,
-      image: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1593691509543-c55fb32d8de5?w=400&h=400&fit=crop",
       category: "Low Maintenance",
       rating: 4.9,
       discount: 20
@@ -48,7 +48,7 @@ const Index = () => {
       name: "Peace Lily",
       price: 179,
       originalPrice: 219,
-      image: "https://images.unsplash.com/photo-1465379944081-7f47de8d74ac?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=400&fit=crop",
       category: "Flowering Plants",
       rating: 4.7,
       discount: 18
@@ -60,25 +60,25 @@ const Index = () => {
       name: "Foliage & Decorative Plants", 
       icon: "🌱", 
       count: 12,
-      image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=300&h=300&fit=crop"
+      image: "https://images.unsplash.com/photo-1587897689715-9eae8b81b68f?w=300&h=300&fit=crop"
     },
     { 
       name: "Flowering & Seasonal Plants", 
       icon: "🌸", 
       count: 6,
-      image: "https://images.unsplash.com/photo-1598979997959-7750c5aa2378?w=300&h=300&fit=crop"
+      image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=300&h=300&fit=crop"
     },
     { 
       name: "Air-Purifying Plants", 
       icon: "🌿", 
       count: 4,
-      image: "https://images.unsplash.com/photo-1581595220892-b0739db3ba8c?w=300&h=300&fit=crop"
+      image: "https://images.unsplash.com/photo-1593691509543-c55fb32d8de5?w=300&h=300&fit=crop"
     },
     { 
       name: "Combo Packs", 
       icon: "📦", 
       count: 4,
-      image: "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=300&h=300&fit=crop"
+      image: "https://images.unsplash.com/photo-1462905245-7bd18cd8a2b4?w=300&h=300&fit=crop"
     }
   ];
 
@@ -115,13 +115,17 @@ const Index = () => {
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-lg transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
-                  Shop Plants Now
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-                <Button variant="outline" size="lg" className="border-green-600 text-green-600 hover:bg-green-50 px-8 py-4 text-lg transform hover:scale-105 transition-all duration-300">
-                  Plant Care Guide
-                </Button>
+                <Link to="/products">
+                  <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-lg transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                    Shop Plants Now
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
+                <Link to="/plant-care">
+                  <Button variant="outline" size="lg" className="border-green-600 text-green-600 hover:bg-green-50 px-8 py-4 text-lg transform hover:scale-105 transition-all duration-300">
+                    Plant Care Guide
+                  </Button>
+                </Link>
               </div>
 
               <div className="flex items-center gap-6 pt-4">
@@ -147,12 +151,12 @@ const Index = () => {
             <div className="relative">
               <div className="grid grid-cols-2 gap-4">
                 <img 
-                  src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=300&h=400&fit=crop" 
+                  src="https://images.unsplash.com/photo-1587897689715-9eae8b81b68f?w=300&h=400&fit=crop" 
                   alt="Beautiful plants"
                   className="rounded-2xl shadow-xl transform rotate-2 hover:rotate-0 transition-transform duration-300"
                 />
                 <img 
-                  src="https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=300&h=400&fit=crop" 
+                  src="https://images.unsplash.com/photo-1462905245-7bd18cd8a2b4?w=300&h=400&fit=crop" 
                   alt="Indoor plants"
                   className="rounded-2xl shadow-xl transform -rotate-2 hover:rotate-0 transition-transform duration-300 mt-8"
                 />

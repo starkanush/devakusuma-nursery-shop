@@ -7,7 +7,7 @@ import { MapPin, Clock, Phone, MessageCircle, Mail, Navigation2 } from "lucide-r
 
 const Contact = () => {
   const handleWhatsAppClick = () => {
-    window.open("https://wa.me/918870751384", "_blank");
+    window.open("https://wa.me/918074525253", "_blank");
   };
 
   return (
@@ -92,9 +92,6 @@ const Contact = () => {
                       <h3 className="font-semibold text-gray-900">Phone Numbers</h3>
                     </div>
                     <div className="space-y-2">
-                      <a href="tel:8870751384" className="block text-blue-600 hover:text-blue-700 font-medium transition-colors">
-                        📞 8870751384
-                      </a>
                       <a href="tel:8074525253" className="block text-blue-600 hover:text-blue-700 font-medium transition-colors">
                         📞 8074525253
                       </a>

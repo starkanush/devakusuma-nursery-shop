@@ -40,12 +40,39 @@ const ProductDetail = () => {
     setSelectedSize(product.sizes[0]);
   }
 
-  const images = [
-    product.image,
-    "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=600&h=600&fit=crop",
-    "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=600&h=600&fit=crop"
-  ];
+  // Updated images based on product name
+  const getProductImages = (productName: string) => {
+    const imageMap: { [key: string]: string[] } = {
+      "Monstera Deliciosa": [
+        "https://images.unsplash.com/photo-1587897689715-9eae8b81b68f?w=600&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?w=600&h=600&fit=crop"
+      ],
+      "Snake Plant": [
+        "https://images.unsplash.com/photo-1593691509543-c55fb32d8de5?w=600&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1581595220892-b0739db3ba8c?w=600&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1463320726281-696a485928c7?w=600&h=600&fit=crop"
+      ],
+      "Peace Lily": [
+        "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1465379944081-7f47de8d74ac?w=600&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=600&fit=crop"
+      ],
+      "Fiddle Leaf Fig": [
+        "https://images.unsplash.com/photo-1462905245-7bd18cd8a2b4?w=600&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=600&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?w=600&h=600&fit=crop"
+      ]
+    };
+    
+    return imageMap[productName] || [
+      product.image,
+      "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=600&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=600&h=600&fit=crop"
+    ];
+  };
 
+  const images = getProductImages(product.name);
   const relatedProducts = plants.filter(p => p.category === product.category && p.id !== product.id).slice(0, 3);
 
   const handleAddToCart = () => {
@@ -54,14 +81,6 @@ const ProductDetail = () => {
       return;
     }
     toast.success(`Added ${quantity} x ${product.name} (${selectedSize.name}) to cart!`);
-  };
-
-  const handleBuyNow = () => {
-    if (!selectedSize) {
-      toast.error("Please select a size first!");
-      return;
-    }
-    toast.success("Redirecting to checkout...");
   };
 
   const currentPrice = selectedSize?.price || product.sizes[0]?.price || 0;
@@ -199,13 +218,6 @@ const ProductDetail = () => {
                 >
                   <ShoppingCart className="h-5 w-5 mr-2" />
                   Add to Cart
-                </Button>
-                <Button 
-                  onClick={handleBuyNow}
-                  variant="outline" 
-                  className="flex-1 border-green-600 text-green-600 hover:bg-green-50 py-4 text-lg"
-                >
-                  Buy Now
                 </Button>
               </div>
 

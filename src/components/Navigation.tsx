@@ -1,15 +1,47 @@
 
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ShoppingCart, Search, Menu, X, User } from "lucide-react";
+import { ShoppingCart, Search, Menu, X, User, LogOut } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [cartItems] = useState(3); // Mock cart items
+  const [cartItems] = useState(0); // Start with empty cart
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Get initial session
+    const getSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setUser(session?.user ?? null);
+    };
+    getSession();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setUser(session?.user ?? null);
+      }
+    );
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  const handleSignOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      toast.error("Error signing out");
+    } else {
+      toast.success("Successfully signed out");
+      navigate("/");
+    }
+  };
 
   return (
     <nav className="bg-white shadow-lg sticky top-0 z-50">
@@ -58,9 +90,17 @@ const Navigation = () => {
               <Search className="h-5 w-5" />
             </Button>
             
-            <Button variant="ghost" size="sm">
-              <User className="h-5 w-5" />
-            </Button>
+            {user ? (
+              <Button variant="ghost" size="sm" onClick={handleSignOut}>
+                <LogOut className="h-5 w-5" />
+              </Button>
+            ) : (
+              <Link to="/auth">
+                <Button variant="ghost" size="sm">
+                  <User className="h-5 w-5" />
+                </Button>
+              </Link>
+            )}
 
             <Link to="/cart">
               <Button variant="ghost" size="sm" className="relative">
@@ -121,10 +161,22 @@ const Navigation = () => {
               Contact
             </Link>
             <div className="pt-4 border-t">
-              <Button className="w-full bg-green-600 hover:bg-green-700">
-                <Search className="h-4 w-4 mr-2" />
-                Search Plants
-              </Button>
+              {user ? (
+                <Button 
+                  onClick={handleSignOut}
+                  className="w-full bg-red-600 hover:bg-red-700"
+                >
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Sign Out
+                </Button>
+              ) : (
+                <Link to="/auth" onClick={() => setIsMenuOpen(false)}>
+                  <Button className="w-full bg-green-600 hover:bg-green-700">
+                    <User className="h-4 w-4 mr-2" />
+                    Sign In / Sign Up
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
         </div>

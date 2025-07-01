@@ -19,7 +19,7 @@ const Cart = () => {
       size: "Medium",
       price: 140,
       originalPrice: 185,
-      image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=300&h=300&fit=crop",
+      image: "https://images.unsplash.com/photo-1587897689715-9eae8b81b68f?w=300&h=300&fit=crop",
       quantity: 2,
       inStock: true
     },
@@ -29,7 +29,7 @@ const Cart = () => {
       size: "Sapling",
       price: 25,
       originalPrice: 35,
-      image: "https://images.unsplash.com/photo-1581595220892-b0739db3ba8c?w=300&h=300&fit=crop",
+      image: "https://images.unsplash.com/photo-1593691509543-c55fb32d8de5?w=300&h=300&fit=crop",
       quantity: 1,
       inStock: true
     },
@@ -39,7 +39,7 @@ const Cart = () => {
       size: "Basic",
       price: 275,
       originalPrice: 320,
-      image: "https://images.unsplash.com/photo-1536882240095-0379873feb4e?w=300&h=300&fit=crop",
+      image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=300&h=300&fit=crop",
       quantity: 1,
       inStock: false
     }
@@ -105,14 +105,13 @@ const Cart = () => {
     message += `Delivery: ${orderDetails.deliveryFee === 0 ? 'FREE' : `₹${orderDetails.deliveryFee}`}\n`;
     message += `*Total Amount: ₹${orderDetails.total}*\n\n`;
     message += `📞 Contact Numbers:\n`;
-    message += `• 8870751384\n`;
     message += `• 8074525253\n`;
     message += `• 9133229522\n\n`;
     message += `Please confirm this order and provide delivery details. Thank you! 🙏`;
 
     // Encode message for WhatsApp URL
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/918870751384?text=${encodedMessage}`;
+    const whatsappUrl = `https://wa.me/918074525253?text=${encodedMessage}`;
     
     // Open WhatsApp
     window.open(whatsappUrl, '_blank');
@@ -330,7 +329,6 @@ const Cart = () => {
                   <div className="border-t pt-3 mt-3">
                     <p className="font-medium text-gray-900 mb-2">Contact Numbers:</p>
                     <div className="space-y-1">
-                      <p>📞 8870751384</p>
                       <p>📞 8074525253</p>
                       <p>📞 9133229522</p>
                     </div>
