@@ -18,7 +18,7 @@ const Index = () => {
       name: "Monstera Deliciosa",
       price: 299,
       originalPrice: 399,
-      image: "https://images.unsplash.com/photo-1587897689715-9eae8b81b68f?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1509315073617-d54ded7c04c3?w=400&h=400&fit=crop",
       category: "Indoor Plants",
       rating: 4.8,
       discount: 25
@@ -28,7 +28,7 @@ const Index = () => {
       name: "Fiddle Leaf Fig",
       price: 449,
       originalPrice: 549,
-      image: "https://images.unsplash.com/photo-1462905245-7bd18cd8a2b4?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1600411833034-eb5a4fc3c1ff?w=400&h=400&fit=crop",
       category: "Indoor Plants",
       rating: 4.6,
       discount: 18
@@ -60,7 +60,7 @@ const Index = () => {
       name: "Foliage & Decorative Plants", 
       icon: "🌱", 
       count: 12,
-      image: "https://images.unsplash.com/photo-1587897689715-9eae8b81b68f?w=300&h=300&fit=crop"
+      image: "https://images.unsplash.com/photo-1509315073617-d54ded7c04c3?w=300&h=300&fit=crop"
     },
     { 
       name: "Flowering & Seasonal Plants", 
@@ -78,7 +78,7 @@ const Index = () => {
       name: "Combo Packs", 
       icon: "📦", 
       count: 4,
-      image: "https://images.unsplash.com/photo-1462905245-7bd18cd8a2b4?w=300&h=300&fit=crop"
+      image: "https://images.unsplash.com/photo-1600411833034-eb5a4fc3c1ff?w=300&h=300&fit=crop"
     }
   ];
 
@@ -151,12 +151,12 @@ const Index = () => {
             <div className="relative">
               <div className="grid grid-cols-2 gap-4">
                 <img 
-                  src="https://images.unsplash.com/photo-1587897689715-9eae8b81b68f?w=300&h=400&fit=crop" 
+                  src="https://images.unsplash.com/photo-1509315073617-d54ded7c04c3?w=300&h=400&fit=crop" 
                   alt="Beautiful plants"
                   className="rounded-2xl shadow-xl transform rotate-2 hover:rotate-0 transition-transform duration-300"
                 />
                 <img 
-                  src="https://images.unsplash.com/photo-1462905245-7bd18cd8a2b4?w=300&h=400&fit=crop" 
+                  src="https://images.unsplash.com/photo-1600411833034-eb5a4fc3c1ff?w=300&h=400&fit=crop" 
                   alt="Indoor plants"
                   className="rounded-2xl shadow-xl transform -rotate-2 hover:rotate-0 transition-transform duration-300 mt-8"
                 />

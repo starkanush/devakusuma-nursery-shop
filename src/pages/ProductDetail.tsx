@@ -11,12 +11,16 @@ import Footer from "@/components/Footer";
 import SizeSelector from "@/components/SizeSelector";
 import { toast } from "sonner";
 import { plants, PlantSize } from "@/data/plants";
+import { useCart } from "@/contexts/CartContext";
+import { useAuth } from "@/hooks/useAuth";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedSize, setSelectedSize] = useState<PlantSize | null>(null);
+  const { addToCart } = useCart();
+  const { user } = useAuth();
 
   const product = plants.find(p => p.id === parseInt(id || "0"));
 
@@ -44,8 +48,8 @@ const ProductDetail = () => {
   const getProductImages = (productName: string) => {
     const imageMap: { [key: string]: string[] } = {
       "Monstera Deliciosa": [
+        "https://images.unsplash.com/photo-1509315073617-d54ded7c04c3?w=600&h=600&fit=crop",
         "https://images.unsplash.com/photo-1587897689715-9eae8b81b68f?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=600&fit=crop",
         "https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?w=600&h=600&fit=crop"
       ],
       "Snake Plant": [
@@ -59,8 +63,18 @@ const ProductDetail = () => {
         "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=600&fit=crop"
       ],
       "Fiddle Leaf Fig": [
+        "https://images.unsplash.com/photo-1600411833034-eb5a4fc3c1ff?w=600&h=600&fit=crop",
         "https://images.unsplash.com/photo-1462905245-7bd18cd8a2b4?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=600&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=600&h=600&fit=crop"
+      ],
+      "ZZ Plant": [
+        "https://images.unsplash.com/photo-1586084715209-8d10e8e1c2b5?w=600&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1463320898675-b6740e668b25?w=600&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?w=600&h=600&fit=crop"
+      ],
+      "Rubber Plant": [
+        "https://images.unsplash.com/photo-1600411839080-8b85c7b3969c?w=600&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=600&fit=crop",
         "https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?w=600&h=600&fit=crop"
       ]
     };
@@ -75,12 +89,26 @@ const ProductDetail = () => {
   const images = getProductImages(product.name);
   const relatedProducts = plants.filter(p => p.category === product.category && p.id !== product.id).slice(0, 3);
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
+    if (!user) {
+      toast.error("Please sign in to add items to cart");
+      return;
+    }
+
     if (!selectedSize) {
       toast.error("Please select a size first!");
       return;
     }
-    toast.success(`Added ${quantity} x ${product.name} (${selectedSize.name}) to cart!`);
+
+    await addToCart({
+      plant_id: product.id,
+      plant_name: product.name,
+      plant_image: images[0],
+      price: selectedSize.price,
+      original_price: selectedSize.originalPrice || selectedSize.price,
+      size: selectedSize.name,
+      quantity: quantity
+    });
   };
 
   const currentPrice = selectedSize?.price || product.sizes[0]?.price || 0;
@@ -320,7 +348,7 @@ const ProductDetail = () => {
                   <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
                     <div className="relative">
                       <img 
-                        src={relatedProduct.image} 
+                        src={getProductImages(relatedProduct.name)[0]} 
                         alt={relatedProduct.name}
                         className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                       />

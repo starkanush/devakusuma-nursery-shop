@@ -29,7 +29,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const { user } = useAuth();
 
   // Load cart items when user is authenticated
@@ -37,6 +37,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (user) {
       loadCartItems();
     } else {
+      // Clear cart when user logs out
       setCartItems([]);
       setLoading(false);
     }
@@ -45,6 +46,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const loadCartItems = async () => {
     if (!user) return;
 
+    setLoading(true);
     try {
       const { data, error } = await supabase
         .from('cart_items')

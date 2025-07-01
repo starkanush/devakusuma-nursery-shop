@@ -1,44 +1,111 @@
 
 import { Link } from "react-router-dom";
-import { Leaf, Mail, Phone, MapPin, Clock, Star } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Leaf, MapPin, Phone, Mail, MessageCircle } from "lucide-react";
 
 const Footer = () => {
+  const handleWhatsAppClick = () => {
+    window.open("https://wa.me/918074525253", "_blank");
+  };
+
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
-          <div className="space-y-6">
-            <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center">
-                <Leaf className="h-6 w-6 text-white" />
-              </div>
+          <div className="space-y-4">
+            <div className="flex items-center space-x-2">
+              <Leaf className="h-8 w-8 text-green-500" />
               <div>
                 <h3 className="text-xl font-bold">Devakusuma</h3>
                 <p className="text-sm text-gray-400">Nursery Garden</p>
               </div>
             </div>
             <p className="text-gray-400 leading-relaxed">
-              Your trusted partner in creating beautiful green spaces. We provide premium quality plants 
-              and expert gardening advice to help you build your dream garden.
+              Your trusted partner in creating beautiful green spaces. We provide premium quality plants and expert gardening solutions for over a decade.
             </p>
-            <div className="flex items-center space-x-1">
-              {[1,2,3,4,5].map((i) => (
-                <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-              ))}
-              <span className="text-sm text-gray-400 ml-2">4.8/5 from 50,000+ customers</span>
+            <div className="flex space-x-4">
+              <button 
+                onClick={handleWhatsAppClick}
+                className="bg-green-600 hover:bg-green-700 p-3 rounded-full transform hover:scale-110 transition-all duration-300"
+                aria-label="WhatsApp"
+              >
+                <MessageCircle className="h-5 w-5" />
+              </button>
             </div>
           </div>
 
-          {/* Contact Information */}
-          <div className="space-y-6">
-            <h4 className="text-lg font-semibold text-white">Contact Info</h4>
+          {/* Quick Links */}
+          <div>
+            <h4 className="text-lg font-semibold mb-6">Quick Links</h4>
+            <ul className="space-y-3">
+              <li>
+                <Link to="/" className="text-gray-400 hover:text-white transition-colors">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/products" className="text-gray-400 hover:text-white transition-colors">
+                  Plants
+                </Link>
+              </li>
+              <li>
+                <Link to="/plant-care" className="text-gray-400 hover:text-white transition-colors">
+                  Plant Care
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" className="text-gray-400 hover:text-white transition-colors">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="text-gray-400 hover:text-white transition-colors">
+                  Contact
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Plant Categories */}
+          <div>
+            <h4 className="text-lg font-semibold mb-6">Plant Categories</h4>
+            <ul className="space-y-3">
+              <li>
+                <Link to="/products" className="text-gray-400 hover:text-white transition-colors">
+                  Indoor Plants
+                </Link>
+              </li>
+              <li>
+                <Link to="/products" className="text-gray-400 hover:text-white transition-colors">
+                  Outdoor Plants
+                </Link>
+              </li>
+              <li>
+                <Link to="/products" className="text-gray-400 hover:text-white transition-colors">
+                  Flowering Plants
+                </Link>
+              </li>
+              <li>
+                <Link to="/products" className="text-gray-400 hover:text-white transition-colors">
+                  Air Purifying
+                </Link>
+              </li>
+              <li>
+                <Link to="/products" className="text-gray-400 hover:text-white transition-colors">
+                  Low Maintenance
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact Info */}
+          <div>
+            <h4 className="text-lg font-semibold mb-6">Contact Info</h4>
             <div className="space-y-4">
-              <div className="flex items-start gap-3">
-                <MapPin className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
+              <div className="flex items-start space-x-3">
+                <MapPin className="h-5 w-5 text-green-500 mt-1 flex-shrink-0" />
                 <div>
-                  <p className="text-gray-300 text-sm leading-relaxed">
+                  <p className="text-gray-400">
                     Venkayamma Peta Road<br />
                     Rajamahendravaram<br />
                     Andhra Pradesh
@@ -46,114 +113,47 @@ const Footer = () => {
                 </div>
               </div>
               
-              <div className="flex items-center gap-3">
-                <Phone className="h-5 w-5 text-green-400 flex-shrink-0" />
+              <div className="flex items-center space-x-3">
+                <Phone className="h-5 w-5 text-green-500 flex-shrink-0" />
                 <div className="space-y-1">
-                  <a href="tel:8870751384" className="block text-gray-300 hover:text-white transition-colors text-sm">
-                    8870751384
-                  </a>
-                  <a href="tel:8074525253" className="block text-gray-300 hover:text-white transition-colors text-sm">
+                  <a href="tel:8074525253" className="text-gray-400 hover:text-white transition-colors block">
                     8074525253
                   </a>
-                  <a href="tel:9133229522" className="block text-gray-300 hover:text-white transition-colors text-sm">
+                  <a href="tel:9133229522" className="text-gray-400 hover:text-white transition-colors block">
                     9133229522
                   </a>
                 </div>
               </div>
               
-              <div className="flex items-center gap-3">
-                <Clock className="h-5 w-5 text-green-400 flex-shrink-0" />
-                <p className="text-gray-300 text-sm">Open daily: 5:00 AM – 7:00 PM</p>
+              <div className="flex items-center space-x-3">
+                <Mail className="h-5 w-5 text-green-500 flex-shrink-0" />
+                <a 
+                  href="mailto:info@devakusuma.com" 
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  info@devakusuma.com
+                </a>
               </div>
-            </div>
-          </div>
 
-          {/* Quick Links */}
-          <div className="space-y-6">
-            <h4 className="text-lg font-semibold text-white">Quick Links</h4>
-            <ul className="space-y-3">
-              <li>
-                <Link to="/products" className="text-gray-400 hover:text-white transition-colors text-sm hover:underline">
-                  Shop Plants
-                </Link>
-              </li>
-              <li>
-                <Link to="/plant-care" className="text-gray-400 hover:text-white transition-colors text-sm hover:underline">
-                  Plant Care Guide
-                </Link>
-              </li>
-              <li>
-                <Link to="/about" className="text-gray-400 hover:text-white transition-colors text-sm hover:underline">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="text-gray-400 hover:text-white transition-colors text-sm hover:underline">
-                  Contact
-                </Link>
-              </li>
-              <li>
-                <Link to="/cart" className="text-gray-400 hover:text-white transition-colors text-sm hover:underline">
-                  Shopping Cart
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Newsletter & Social */}
-          <div className="space-y-6">
-            <h4 className="text-lg font-semibold text-white">Stay Connected</h4>
-            <p className="text-gray-400 text-sm">
-              Get plant care tips, new arrivals, and exclusive offers delivered to your inbox.
-            </p>
-            <div className="space-y-4">
-              <div className="flex">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1 px-3 py-2 bg-gray-800 border border-gray-700 rounded-l-lg focus:outline-none focus:border-green-500 text-sm"
-                />
-                <Button className="bg-green-600 hover:bg-green-700 rounded-l-none px-4">
-                  <Mail className="h-4 w-4" />
-                </Button>
-              </div>
-              <p className="text-xs text-gray-500">
-                By subscribing, you agree to our Privacy Policy and Terms of Service.
-              </p>
-            </div>
-            
-            <div>
-              <h5 className="font-medium mb-3 text-white">Follow Us</h5>
-              <div className="flex space-x-2">
-                <Button size="sm" variant="outline" className="border-gray-700 text-gray-400 hover:text-white hover:border-green-500 hover:bg-green-500/10 text-xs px-3">
-                  Facebook
-                </Button>
-                <Button size="sm" variant="outline" className="border-gray-700 text-gray-400 hover:text-white hover:border-green-500 hover:bg-green-500/10 text-xs px-3">
-                  Instagram
-                </Button>
-                <Button size="sm" variant="outline" className="border-gray-700 text-gray-400 hover:text-white hover:border-green-500 hover:bg-green-500/10 text-xs px-3">
-                  YouTube
-                </Button>
+              <div className="pt-4">
+                <p className="text-sm text-gray-400 mb-2">Business Hours:</p>
+                <p className="text-green-400 font-medium">Open Daily: 5:00 AM - 7:00 PM</p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-gray-800 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-sm text-gray-400 text-center md:text-left">
+        <div className="border-t border-gray-800 mt-12 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="text-gray-400 text-sm">
               © 2024 Devakusuma Nursery Garden. All rights reserved.
             </div>
-            <div className="flex flex-wrap items-center justify-center md:justify-end space-x-6 text-sm text-gray-400">
-              <Link to="/privacy" className="hover:text-white transition-colors hover:underline">
+            <div className="flex space-x-6 mt-4 md:mt-0">
+              <Link to="/privacy" className="text-gray-400 hover:text-white text-sm transition-colors">
                 Privacy Policy
               </Link>
-              <Link to="/terms" className="hover:text-white transition-colors hover:underline">
+              <Link to="/terms" className="text-gray-400 hover:text-white text-sm transition-colors">
                 Terms of Service
-              </Link>
-              <Link to="/sitemap" className="hover:text-white transition-colors hover:underline">
-                Sitemap
               </Link>
             </div>
           </div>
