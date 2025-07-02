@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -43,7 +44,7 @@ const ProductDetail = () => {
     setSelectedSize(product.sizes[0]);
   }
 
-  // Updated images based on product name with plant-specific URLs
+  // Updated images based on product name with accurate plant-specific URLs
   const getProductImages = (productName: string) => {
     const imageMap: { [key: string]: string[] } = {
       "Ficus (All Types)": [
@@ -54,22 +55,22 @@ const ProductDetail = () => {
       "Areca Palm": [
         "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=600&h=600&fit=crop",
         "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=600&h=600&fit=crop"
+        "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=600&h=600&fit=crop"
       ],
       "Crotons (Duck Foot, Gold Dust)": [
-        "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1606041008023-472dfb5e530f?w=600&h=600&fit=crop",
         "https://images.unsplash.com/photo-1465379944081-7f47de8d74ac?w=600&h=600&fit=crop",
         "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=600&fit=crop"
       ],
       "Thuja / Morpankhi": [
-        "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=600&h=600&fit=crop",
         "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=600&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=600&h=600&fit=crop",
         "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=600&h=600&fit=crop"
       ],
       "Cordyline": [
-        "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=600&h=600&fit=crop",
         "https://images.unsplash.com/photo-1463320726281-696a485928c7?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?w=600&h=600&fit=crop"
+        "https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?w=600&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=600&h=600&fit=crop"
       ],
       "Dracaena Marginata": [
         "https://images.unsplash.com/photo-1583606663585-39573b6e0a13?w=600&h=600&fit=crop",
@@ -77,8 +78,8 @@ const ProductDetail = () => {
         "https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?w=600&h=600&fit=crop"
       ],
       "Cycads": [
-        "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=600&h=600&fit=crop",
         "https://images.unsplash.com/photo-1604603662088-3beeacabb8ad?w=600&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=600&h=600&fit=crop",
         "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=600&h=600&fit=crop"
       ],
       "Snake Plant": [
@@ -137,8 +138,8 @@ const ProductDetail = () => {
         "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=600&h=600&fit=crop"
       ],
       "Money Plant (Outdoor)": [
-        "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=600&h=600&fit=crop",
         "https://images.unsplash.com/photo-1586771711050-1182295b5e6f?w=600&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=600&h=600&fit=crop",
         "https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?w=600&h=600&fit=crop"
       ]
     };

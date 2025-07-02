@@ -67,7 +67,7 @@ export const plants: Plant[] = [
       { name: "Medium", price: 110 },
       { name: "Basic", price: 180 }
     ],
-    image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1606041008023-472dfb5e530f?w=400&h=400&fit=crop",
     category: "Foliage & Decorative Plants",
     rating: 4.4,
     inStock: true,
@@ -82,7 +82,7 @@ export const plants: Plant[] = [
       { name: "Medium", price: 225 },
       { name: "Basic", price: 350 }
     ],
-    image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=400&h=400&fit=crop",
     category: "Foliage & Decorative Plants",
     rating: 4.6,
     inStock: true,
@@ -97,7 +97,7 @@ export const plants: Plant[] = [
       { name: "Medium", price: 150 },
       { name: "Basic", price: 220 }
     ],
-    image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1463320726281-696a485928c7?w=400&h=400&fit=crop",
     category: "Foliage & Decorative Plants",
     rating: 4.3,
     inStock: true,
@@ -127,7 +127,7 @@ export const plants: Plant[] = [
       { name: "Medium", price: 350 },
       { name: "Basic", price: 550 }
     ],
-    image: "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1604603662088-3beeacabb8ad?w=400&h=400&fit=crop",
     category: "Foliage & Decorative Plants",
     rating: 4.9,
     inStock: true,
@@ -309,7 +309,7 @@ export const plants: Plant[] = [
       { name: "Medium", price: 60 },
       { name: "Basic", price: 95 }
     ],
-    image: "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1586771711050-1182295b5e6f?w=400&h=400&fit=crop",
     category: "Air-Purifying Plants",
     rating: 4.5,
     inStock: true,
@@ -345,7 +345,7 @@ export const comboPacks: ComboPack[] = [
     plants: ["Crotons", "Areca Palm", "Jade Plant"],
     price: 225,
     originalPrice: 280,
-    image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1606041008023-472dfb5e530f?w=400&h=400&fit=crop",
     category: "Combo Packs",
     description: "Ideal starter pack for creating a beautiful balcony garden."
   },
