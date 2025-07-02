@@ -1,3 +1,4 @@
+
 export interface PlantSize {
   name: string;
   price: number;
@@ -8,6 +9,7 @@ export interface Plant {
   name: string;
   sizes: PlantSize[];
   image: string;
+  images?: string[]; // Add multiple images support
   category: string;
   rating: number;
   inStock: boolean;
@@ -36,7 +38,12 @@ export const plants: Plant[] = [
       { name: "Medium", price: 140 },
       { name: "Basic", price: 200 }
     ],
-    image: "https://images.unsplash.com/photo-1509315811345-672d83ef2fbc?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1680677246220-1b9aa4a7408a?w=400&h=400&fit=crop",
+    images: [
+      "https://unsplash.com/photos/a-man-holding-a-box-of-plants-in-front-of-a-table-tauD03qyO_0?w=600&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1612363148951-8b0e3831e90c?w=600&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1606041008023-472dfb5e530f?w=600&h=600&fit=crop"
+    ],
     category: "Foliage & Decorative Plants",
     rating: 4.5,
     inStock: true,
@@ -51,7 +58,12 @@ export const plants: Plant[] = [
       { name: "Medium", price: 185 },
       { name: "Basic", price: 250 }
     ],
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=400&h=400&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=600&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=600&h=600&fit=crop"
+    ],
     category: "Foliage & Decorative Plants",
     rating: 4.7,
     inStock: true,
@@ -66,7 +78,12 @@ export const plants: Plant[] = [
       { name: "Medium", price: 110 },
       { name: "Basic", price: 180 }
     ],
-    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=400&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1465379944081-7f47de8d74ac?w=600&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=600&fit=crop"
+    ],
     category: "Foliage & Decorative Plants",
     rating: 4.4,
     inStock: true,
@@ -81,7 +98,12 @@ export const plants: Plant[] = [
       { name: "Medium", price: 225 },
       { name: "Basic", price: 350 }
     ],
-    image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=400&h=400&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=600&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=600&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=600&h=600&fit=crop"
+    ],
     category: "Foliage & Decorative Plants",
     rating: 4.6,
     inStock: true,
@@ -96,7 +118,12 @@ export const plants: Plant[] = [
       { name: "Medium", price: 150 },
       { name: "Basic", price: 220 }
     ],
-    image: "https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=400&h=400&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=600&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1580428456289-31b363a16e73?w=600&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1517848568502-d03fa74e1964?w=600&h=600&fit=crop"
+    ],
     category: "Foliage & Decorative Plants",
     rating: 4.3,
     inStock: true,
@@ -111,7 +138,7 @@ export const plants: Plant[] = [
       { name: "Medium", price: 185 },
       { name: "Basic", price: 280 }
     ],
-    image: "https://images.unsplash.com/photo-1463320898675-b6740e668b25?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1583606663585-39573b6e0a13?w=400&h=400&fit=crop",
     category: "Foliage & Decorative Plants",
     rating: 4.8,
     inStock: true,
@@ -126,7 +153,7 @@ export const plants: Plant[] = [
       { name: "Medium", price: 350 },
       { name: "Basic", price: 550 }
     ],
-    image: "https://images.unsplash.com/photo-1604684891088-3beeacabb8ad?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=400&h=400&fit=crop",
     category: "Foliage & Decorative Plants",
     rating: 4.9,
     inStock: true,
@@ -141,7 +168,12 @@ export const plants: Plant[] = [
       { name: "Medium", price: 115 },
       { name: "Basic", price: 180 }
     ],
-    image: "https://images.unsplash.com/photo-1581595220892-b0739db3ba8c?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1593691509543-c55fb32d8de5?w=400&h=400&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1593691509543-c55fb32d8de5?w=600&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1581595220892-b0739db3ba8c?w=600&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1463320726281-696a485928c7?w=600&h=600&fit=crop"
+    ],
     category: "Air-Purifying Plants",
     rating: 4.9,
     inStock: true,
@@ -171,7 +203,7 @@ export const plants: Plant[] = [
       { name: "Medium", price: 75 },
       { name: "Basic", price: 120 }
     ],
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=400&h=400&fit=crop",
     category: "Air-Purifying Plants",
     rating: 4.6,
     inStock: true,
@@ -308,7 +340,7 @@ export const plants: Plant[] = [
       { name: "Medium", price: 60 },
       { name: "Basic", price: 95 }
     ],
-    image: "https://images.unsplash.com/photo-1586771711050-1182295b5e6f?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=400&h=400&fit=crop",
     category: "Air-Purifying Plants",
     rating: 4.5,
     inStock: true,
@@ -324,7 +356,7 @@ export const comboPacks: ComboPack[] = [
     plants: ["Snake Plant", "Spider Plant", "Dracaena Marginata"],
     price: 275,
     originalPrice: 320,
-    image: "https://images.unsplash.com/photo-1593691509543-c55fb32d8de5?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1680677246220-1b9aa4a7408a?w=400&h=400&fit=crop",
     category: "Combo Packs",
     description: "Perfect combination of air-purifying plants for healthier indoor air."
   },
@@ -344,7 +376,7 @@ export const comboPacks: ComboPack[] = [
     plants: ["Crotons", "Areca Palm", "Jade Plant"],
     price: 225,
     originalPrice: 280,
-    image: "https://images.unsplash.com/photo-1606041008023-472dfb5e530f?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=400&fit=crop",
     category: "Combo Packs",
     description: "Ideal starter pack for creating a beautiful balcony garden."
   },
@@ -354,19 +386,9 @@ export const comboPacks: ComboPack[] = [
     plants: ["Jade Plant", "Money Plant"],
     price: 100,
     originalPrice: 135,
-    image: "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=400&h=400&fit=crop",
+    image: "https://unsplash.com/photos/a-man-holding-a-box-of-plants-in-front-of-a-table-tauD03qyO_0?w=400&h=400&fit=crop",
     category: "Combo Packs",
     description: "Perfect small gifting pack with lucky plants in decorative pots."
-  },
-  {
-    id: 105,
-    name: "Cactus & Succulent Collection",
-    plants: ["Cactus", "Succulent", "Desert Plants"],
-    price: 180,
-    originalPrice: 220,
-    image: "/lovable-uploads/8d247970-a4b9-4252-b4a9-99845ab57e8c.png",
-    category: "Combo Packs",
-    description: "Beautiful collection of low-maintenance cacti and succulents in decorative pots."
   }
 ];
 
