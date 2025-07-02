@@ -1,4 +1,3 @@
-
 export interface PlantSize {
   name: string;
   price: number;
@@ -358,6 +357,16 @@ export const comboPacks: ComboPack[] = [
     image: "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=400&h=400&fit=crop",
     category: "Combo Packs",
     description: "Perfect small gifting pack with lucky plants in decorative pots."
+  },
+  {
+    id: 105,
+    name: "Cactus & Succulent Collection",
+    plants: ["Cactus", "Succulent", "Desert Plants"],
+    price: 180,
+    originalPrice: 220,
+    image: "/lovable-uploads/167b886f-1b62-4105-92e0-786b3410f805.png",
+    category: "Combo Packs",
+    description: "Beautiful collection of low-maintenance cacti and succulents in decorative pots."
   }
 ];
 
