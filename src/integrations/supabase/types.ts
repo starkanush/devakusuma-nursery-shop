@@ -51,6 +51,101 @@ export type Database = {
         }
         Relationships: []
       }
+      order_items: {
+        Row: {
+          created_at: string
+          id: string
+          order_id: string
+          original_price: number
+          plant_id: number
+          plant_image: string
+          plant_name: string
+          price: number
+          quantity: number
+          size: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          order_id: string
+          original_price: number
+          plant_id: number
+          plant_image: string
+          plant_name: string
+          price: number
+          quantity: number
+          size: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          order_id?: string
+          original_price?: number
+          plant_id?: number
+          plant_image?: string
+          plant_name?: string
+          price?: number
+          quantity?: number
+          size?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          created_at: string
+          customer_name: string | null
+          customer_phone: string | null
+          delivery_address: string | null
+          delivery_fee: number
+          id: string
+          notes: string | null
+          order_number: string
+          status: string
+          subtotal: number
+          total: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          customer_name?: string | null
+          customer_phone?: string | null
+          delivery_address?: string | null
+          delivery_fee?: number
+          id?: string
+          notes?: string | null
+          order_number: string
+          status?: string
+          subtotal: number
+          total: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          customer_name?: string | null
+          customer_phone?: string | null
+          delivery_address?: string | null
+          delivery_fee?: number
+          id?: string
+          notes?: string | null
+          order_number?: string
+          status?: string
+          subtotal?: number
+          total?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -83,7 +178,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_order_number: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never
