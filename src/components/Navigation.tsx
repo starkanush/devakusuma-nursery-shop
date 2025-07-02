@@ -74,9 +74,16 @@ const Navigation = () => {
             </Button>
             
             {user ? (
-              <Button variant="ghost" size="sm" onClick={handleSignOut}>
-                <LogOut className="h-5 w-5" />
-              </Button>
+              <div className="flex items-center space-x-2">
+                <Link to="/profile">
+                  <Button variant="ghost" size="sm">
+                    <User className="h-5 w-5" />
+                  </Button>
+                </Link>
+                <Button variant="ghost" size="sm" onClick={handleSignOut}>
+                  <LogOut className="h-5 w-5" />
+                </Button>
+              </div>
             ) : (
               <Link to="/auth">
                 <Button variant="ghost" size="sm">
@@ -145,13 +152,21 @@ const Navigation = () => {
             </Link>
             <div className="pt-4 border-t">
               {user ? (
-                <Button 
-                  onClick={handleSignOut}
-                  className="w-full bg-red-600 hover:bg-red-700"
-                >
-                  <LogOut className="h-4 w-4 mr-2" />
-                  Sign Out
-                </Button>
+                <div className="space-y-3">
+                  <Link to="/profile" onClick={() => setIsMenuOpen(false)}>
+                    <Button className="w-full bg-green-600 hover:bg-green-700">
+                      <User className="h-4 w-4 mr-2" />
+                      My Profile
+                    </Button>
+                  </Link>
+                  <Button 
+                    onClick={handleSignOut}
+                    className="w-full bg-red-600 hover:bg-red-700"
+                  >
+                    <LogOut className="h-4 w-4 mr-2" />
+                    Sign Out
+                  </Button>
+                </div>
               ) : (
                 <Link to="/auth" onClick={() => setIsMenuOpen(false)}>
                   <Button className="w-full bg-green-600 hover:bg-green-700">

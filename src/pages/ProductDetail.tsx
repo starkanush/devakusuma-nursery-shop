@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,9 +9,129 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SizeSelector from "@/components/SizeSelector";
 import { toast } from "sonner";
-import { plants, PlantSize } from "@/data/plants";
+import { plants, Plant, PlantSize } from "@/data/plants";
 import { useCart } from "@/contexts/CartContext";
 import { useAuth } from "@/hooks/useAuth";
+
+// Image mapping for products - provides high-quality images for each plant type
+// This ensures all plants have appropriate images even if not defined in plants.ts
+const imageMap: { [key: string]: string[] } = {
+  "Ficus (All Types)": [
+    "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1612363148951-8b0e3831e90c?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1606041008023-472dfb5e530f?w=600&h=600&fit=crop"
+  ],
+  "Areca Palm": [
+    "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=600&h=600&fit=crop"
+  ],
+  "Crotons (Duck Foot, Gold Dust)": [
+    "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1465379944081-7f47de8d74ac?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=600&fit=crop"
+  ],
+  "Thuja / Morpankhi": [
+    "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=600&h=600&fit=crop"
+  ],
+  "Cordyline": [
+    "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1580428456289-31b363a16e73?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1517848568502-d03fa74e1964?w=600&h=600&fit=crop"
+  ],
+  "Dracaena Marginata": [
+    "https://images.unsplash.com/photo-1583606663585-39573b6e0a13?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1587897689715-9eae8b81b68f?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?w=600&h=600&fit=crop"
+  ],
+  "Cycads": [
+    "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1604603662088-3beeacabb8ad?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=600&h=600&fit=crop"
+  ],
+  "Snake Plant": [
+    "https://images.unsplash.com/photo-1593691509543-c55fb32d8de5?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1581595220892-b0739db3ba8c?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1463320726281-696a485928c7?w=600&h=600&fit=crop"
+  ],
+  "ZZ Plant": [
+    "https://images.unsplash.com/photo-1586084715209-8d10e8e1c2b5?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1463320898675-b6740e668b25?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?w=600&h=600&fit=crop"
+  ],
+  "Jade Plant": [
+    "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?w=600&h=600&fit=crop"
+  ],
+  "Spider Plant": [
+    "https://images.unsplash.com/photo-1565011523534-747a8601de95?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?w=600&h=600&fit=crop"
+  ],
+  "Ferns": [
+    "https://images.unsplash.com/photo-1585316829082-2a1dc8854e4e?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=600&h=600&fit=crop"
+  ],
+  "Bougainvillea": [
+    "https://images.unsplash.com/photo-1598979997959-7750c5aa2378?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1574684891174-df6b02ab38d7?w=600&h=600&fit=crop"
+  ],
+  "Hibiscus": [
+    "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1574684891174-df6b02ab38d7?w=600&h=600&fit=crop"
+  ],
+  "Marigold (Seasonal)": [
+    "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1601997357747-5394b3e6fb6c?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1574684891174-df6b02ab38d7?w=600&h=600&fit=crop"
+  ],
+  "Chrysanthemum": [
+    "https://images.unsplash.com/photo-1574684891174-df6b02ab38d7?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1601997357747-5394b3e6fb6c?w=600&h=600&fit=crop"
+  ],
+  "Hybrid Roses": [
+    "https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1574684891174-df6b02ab38d7?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=600&h=600&fit=crop"
+  ],
+  "Plumeria (Frangipani)": [
+    "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1574684891174-df6b02ab38d7?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=600&h=600&fit=crop"
+  ],
+  "Money Plant (Outdoor)": [
+    "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1586771711050-1182295b5e6f?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?w=600&h=600&fit=crop"
+  ]
+};
+
+// Get product images based on product data
+const getProductImages = (product: Plant): string[] => {
+  // If the product has an images array, use it
+  if (product.images && Array.isArray(product.images) && product.images.length > 0) {
+    return product.images;
+  }
+  
+  // Check if the product name exists in the imageMap
+  if (product.name && imageMap[product.name]) {
+    return imageMap[product.name];
+  }
+  
+  // Fallback to default images if no match found
+  return [
+    product.image || "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=600&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=600&h=600&fit=crop"
+  ];
+};
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -43,115 +163,12 @@ const ProductDetail = () => {
     setSelectedSize(product.sizes[0]);
   }
 
-  // Updated images based on product name with plant-specific URLs
-  const getProductImages = (productName: string) => {
-    const imageMap: { [key: string]: string[] } = {
-      "Ficus (All Types)": [
-        "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1612363148951-8b0e3831e90c?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1606041008023-472dfb5e530f?w=600&h=600&fit=crop"
-      ],
-      "Areca Palm": [
-        "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=600&h=600&fit=crop"
-      ],
-      "Crotons (Duck Foot, Gold Dust)": [
-        "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1465379944081-7f47de8d74ac?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=600&fit=crop"
-      ],
-      "Thuja / Morpankhi": [
-        "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=600&h=600&fit=crop"
-      ],
-      "Cordyline": [
-        "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1463320726281-696a485928c7?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?w=600&h=600&fit=crop"
-      ],
-      "Dracaena Marginata": [
-        "https://images.unsplash.com/photo-1583606663585-39573b6e0a13?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1587897689715-9eae8b81b68f?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?w=600&h=600&fit=crop"
-      ],
-      "Cycads": [
-        "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1604603662088-3beeacabb8ad?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=600&h=600&fit=crop"
-      ],
-      "Snake Plant": [
-        "https://images.unsplash.com/photo-1593691509543-c55fb32d8de5?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1581595220892-b0739db3ba8c?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1463320726281-696a485928c7?w=600&h=600&fit=crop"
-      ],
-      "ZZ Plant": [
-        "https://images.unsplash.com/photo-1586084715209-8d10e8e1c2b5?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1463320898675-b6740e668b25?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?w=600&h=600&fit=crop"
-      ],
-      "Jade Plant": [
-        "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?w=600&h=600&fit=crop"
-      ],
-      "Spider Plant": [
-        "https://images.unsplash.com/photo-1565011523534-747a8601de95?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?w=600&h=600&fit=crop"
-      ],
-      "Ferns": [
-        "https://images.unsplash.com/photo-1585316829082-2a1dc8854e4e?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=600&h=600&fit=crop"
-      ],
-      "Bougainvillea": [
-        "https://images.unsplash.com/photo-1598979997959-7750c5aa2378?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1574684891174-df6b02ab38d7?w=600&h=600&fit=crop"
-      ],
-      "Hibiscus": [
-        "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1574684891174-df6b02ab38d7?w=600&h=600&fit=crop"
-      ],
-      "Marigold (Seasonal)": [
-        "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1601997357747-5394b3e6fb6c?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1574684891174-df6b02ab38d7?w=600&h=600&fit=crop"
-      ],
-      "Chrysanthemum": [
-        "https://images.unsplash.com/photo-1574684891174-df6b02ab38d7?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1601997357747-5394b3e6fb6c?w=600&h=600&fit=crop"
-      ],
-      "Hybrid Roses": [
-        "https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1574684891174-df6b02ab38d7?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=600&h=600&fit=crop"
-      ],
-      "Plumeria (Frangipani)": [
-        "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1574684891174-df6b02ab38d7?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=600&h=600&fit=crop"
-      ],
-      "Money Plant (Outdoor)": [
-        "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1586771711050-1182295b5e6f?w=600&h=600&fit=crop",
-        "https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?w=600&h=600&fit=crop"
-      ]
-    };
-    
-    return imageMap[productName] || [
-      product.image,
-      "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=600&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=600&h=600&fit=crop"
-    ];
-  };
-
-  const images = getProductImages(product.name);
-  const relatedProducts = plants.filter(p => p.category === product.category && p.id !== product.id).slice(0, 3);
+  // Use useMemo to memoize the images and related products to prevent recalculation on every render
+  const images = useMemo(() => getProductImages(product), [product]);
+  const relatedProducts = useMemo(() => 
+    plants.filter(p => p.category === product.category && p.id !== product.id).slice(0, 3),
+    [product.category, product.id]
+  );
 
   const handleAddToCart = async () => {
     if (!user) {
@@ -167,7 +184,7 @@ const ProductDetail = () => {
     await addToCart({
       plant_id: product.id,
       plant_name: product.name,
-      plant_image: images[0],
+      plant_image: images && images.length > 0 ? images[0] : product.image,
       price: selectedSize.price,
       original_price: selectedSize.price,
       size: selectedSize.name,
@@ -199,56 +216,69 @@ const ProductDetail = () => {
 
         <div className="grid lg:grid-cols-2 gap-12 mb-16">
           {/* Product Images */}
-          <div className="space-y-4">
+          <div className="space-y-4 animate-in fade-in slide-in-from-left duration-700">
             <div className="aspect-square rounded-2xl overflow-hidden bg-gray-100">
               <img 
-                src={images[selectedImage]} 
+                src={images && images.length > selectedImage ? images[selectedImage] : product.image} 
                 alt={product.name}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transition-all duration-500 hover:scale-110"
               />
             </div>
             <div className="flex gap-4">
-              {images.map((image, index) => (
+              {images && images.length > 0 ? (
+                images.map((image, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setSelectedImage(index)}
+                    className={`w-20 h-20 rounded-lg overflow-hidden border-2 transition-all duration-300 hover:shadow-lg transform hover:scale-105 ${
+                      selectedImage === index ? 'border-green-500' : 'border-gray-200'
+                    }`}
+                  >
+                    <img 
+                      src={image || product.image} 
+                      alt={`${product.name} ${index + 1}`}
+                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                    />
+                  </button>
+                ))
+              ) : (
                 <button
-                  key={index}
-                  onClick={() => setSelectedImage(index)}
-                  className={`w-20 h-20 rounded-lg overflow-hidden border-2 transition-colors ${
-                    selectedImage === index ? 'border-green-500' : 'border-gray-200'
-                  }`}
+                  className="w-20 h-20 rounded-lg overflow-hidden border-2 border-green-500 transition-all duration-300 hover:shadow-lg transform hover:scale-105"
                 >
                   <img 
-                    src={image} 
-                    alt={`${product.name} ${index + 1}`}
-                    className="w-full h-full object-cover"
+                    src={product.image} 
+                    alt={product.name}
+                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
                   />
                 </button>
-              ))}
+              )}
             </div>
           </div>
 
           {/* Product Info */}
-          <div className="space-y-6">
+          <div className="space-y-6 animate-in fade-in slide-in-from-right duration-700">
             <div>
-              <Badge className="bg-green-100 text-green-800 mb-4">
+              <Badge className="bg-green-100 text-green-800 mb-4 animate-in fade-in duration-500">
                 {product.category}
               </Badge>
-              <h1 className="text-4xl font-bold text-gray-900 mb-4">{product.name}</h1>
+              <h1 className="text-4xl font-bold text-gray-900 mb-4 animate-in fade-in duration-700">{product.name}</h1>
               
-              <div className="flex items-center gap-4 mb-4">
+              <div className="flex items-center gap-4 mb-4 animate-in fade-in duration-1000">
                 <div className="flex items-center gap-1">
                   {[1,2,3,4,5].map((i) => (
                     <Star 
                       key={i} 
-                      className={`h-5 w-5 ${i <= Math.floor(product.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} 
+                      className={`h-5 w-5 animate-in zoom-in duration-300 ${i <= Math.floor(product.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} 
+                      style={{ animationDelay: `${i * 100}ms` }}
                     />
                   ))}
                 </div>
                 <span className="text-gray-600">({product.rating} rating)</span>
               </div>
 
-              <div className="flex items-center gap-4 mb-6">
+              <div className="flex items-center gap-4 mb-6 animate-in fade-in duration-1000 delay-300">
                 <span className="text-4xl font-bold text-green-600">₹{currentPrice}</span>
-                <Badge className={`${
+                <Badge className={`animate-in zoom-in duration-500 delay-500 ${
                   product.careLevel === 'Easy' ? 'bg-green-100 text-green-700' :
                   product.careLevel === 'Medium' ? 'bg-yellow-100 text-yellow-700' :
                   'bg-red-100 text-red-700'
@@ -303,12 +333,12 @@ const ProductDetail = () => {
                 </div>
               </div>
 
-              <div className="flex gap-4 mb-6">
+              <div className="flex gap-4 mb-6 animate-in fade-in duration-1000 delay-500">
                 <Button 
                   onClick={handleAddToCart}
-                  className="flex-1 bg-green-600 hover:bg-green-700 text-white py-4 text-lg"
+                  className="flex-1 bg-green-600 hover:bg-green-700 text-white py-4 text-lg transform hover:scale-105 transition-all duration-300"
                 >
-                  <ShoppingCart className="h-5 w-5 mr-2" />
+                  <ShoppingCart className="h-5 w-5 mr-2 group-hover:animate-bounce-x" />
                   Add to Cart
                 </Button>
               </div>
@@ -412,10 +442,10 @@ const ProductDetail = () => {
                   <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
                     <div className="relative">
                       <img 
-                        src={getProductImages(relatedProduct.name)[0]} 
-                        alt={relatedProduct.name}
-                        className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
+                    src={getProductImages(relatedProduct)?.[0] || relatedProduct.image} 
+                    alt={relatedProduct.name}
+                    className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
                     </div>
                     <CardContent className="p-6">
                       <h3 className="font-semibold text-lg text-gray-900 mb-2 group-hover:text-green-600 transition-colors">
