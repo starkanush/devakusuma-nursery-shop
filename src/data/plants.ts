@@ -126,7 +126,7 @@ export const plants: Plant[] = [
       { name: "Medium", price: 350 },
       { name: "Basic", price: 550 }
     ],
-    image: "https://images.unsplash.com/photo-1604603662088-3beeacabb8ad?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1604684891088-3beeacabb8ad?w=400&h=400&fit=crop",
     category: "Foliage & Decorative Plants",
     rating: 4.9,
     inStock: true,
@@ -364,7 +364,7 @@ export const comboPacks: ComboPack[] = [
     plants: ["Cactus", "Succulent", "Desert Plants"],
     price: 180,
     originalPrice: 220,
-    image: "/lovable-uploads/167b886f-1b62-4105-92e0-786b3410f805.png",
+    image: "/lovable-uploads/8d247970-a4b9-4252-b4a9-99845ab57e8c.png",
     category: "Combo Packs",
     description: "Beautiful collection of low-maintenance cacti and succulents in decorative pots."
   }
