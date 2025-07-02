@@ -7,28 +7,29 @@ import { Badge } from "@/components/ui/badge";
 import { Search, ShoppingCart, Leaf, Star, ArrowRight, Package, CheckCircle, Users } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { categories } from "@/data/plants";
+import { categories, plants } from "@/data/plants";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Updated featuredPlants with correct images from plants.ts data
   const featuredPlants = [
     {
       id: 1,
-      name: "Monstera Deliciosa",
+      name: "Ficus (All Types)",
       price: 299,
       originalPrice: 399,
-      image: "https://images.unsplash.com/photo-1509315073617-d54ded7c04c3?w=400&h=400&fit=crop",
+      image: plants.find(p => p.name === "Ficus (All Types)")?.image || "https://images.unsplash.com/photo-1680677246220-1b9aa4a7408a?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       category: "Indoor Plants",
       rating: 4.8,
       discount: 25
     },
     {
       id: 2,
-      name: "Fiddle Leaf Fig",
+      name: "Areca Palm",
       price: 449,
       originalPrice: 549,
-      image: "https://images.unsplash.com/photo-1600411833034-eb5a4fc3c1ff?w=400&h=400&fit=crop",
+      image: plants.find(p => p.name === "Areca Palm")?.image || "https://images.unsplash.com/photo-1680677246220-1b9aa4a7408a?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       category: "Indoor Plants",
       rating: 4.6,
       discount: 18
@@ -38,47 +39,44 @@ const Index = () => {
       name: "Snake Plant",
       price: 199,
       originalPrice: 249,
-      image: "https://images.unsplash.com/photo-1593691509543-c55fb32d8de5?w=400&h=400&fit=crop",
-      category: "Low Maintenance",
+      image: plants.find(p => p.name === "Snake Plant")?.image || "https://images.unsplash.com/photo-1680677246220-1b9aa4a7408a?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      category: "Flowering & Seasonal Plants",
       rating: 4.9,
       discount: 20
     },
     {
       id: 4,
-      name: "Peace Lily",
+      name: "Crotons (Duck Foot, Gold Dust)",
       price: 179,
       originalPrice: 219,
-      image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=400&fit=crop",
+      image: plants.find(p => p.name === "Crotons (Duck Foot, Gold Dust)")?.image || "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=400&fit=crop",
       category: "Flowering Plants",
       rating: 4.7,
       discount: 18
     }
   ];
 
+  // Updated categoryData with images from plants.ts data
   const categoryData = [
     { 
       name: "Foliage & Decorative Plants", 
-      icon: "🌱", 
-      count: 12,
-      image: "https://images.unsplash.com/photo-1509315073617-d54ded7c04c3?w=300&h=300&fit=crop"
+      count: plants.filter(p => p.category === "Foliage & Decorative Plants").length,
+      image: plants.find(p => p.category === "Foliage & Decorative Plants")?.image || "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=300&h=300&fit=crop"
     },
     { 
       name: "Flowering & Seasonal Plants", 
-      icon: "🌸", 
-      count: 6,
-      image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=300&h=300&fit=crop"
+      count: plants.filter(p => p.category === "Flowering & Seasonal Plants").length,
+      image: plants.find(p => p.category === "Flowering & Seasonal Plants")?.image || "https://images.unsplash.com/photo-1574684891174-df6b02ab38d7?w=300&h=300&fit=crop"
     },
     { 
       name: "Air-Purifying Plants", 
-      icon: "🌿", 
-      count: 4,
-      image: "https://images.unsplash.com/photo-1593691509543-c55fb32d8de5?w=300&h=300&fit=crop"
+      count: plants.filter(p => p.category === "Air-Purifying Plants").length,
+      image: plants.find(p => p.category === "Air-Purifying Plants")?.image || "https://images.unsplash.com/photo-1593691509543-c55fb32d8de5?w=300&h=300&fit=crop"
     },
     { 
       name: "Combo Packs", 
-      icon: "📦", 
       count: 4,
-      image: "https://images.unsplash.com/photo-1600411833034-eb5a4fc3c1ff?w=300&h=300&fit=crop"
+      image: "https://images.unsplash.com/photo-1680677246220-1b9aa4a7408a?w=300&h=300&fit=crop"
     }
   ];
 
@@ -105,8 +103,8 @@ const Index = () => {
                   Premium Quality Plants
                 </Badge>
                 <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                  Bring Nature
-                  <span className="text-green-600 block">Home Today</span>
+                  <span className="inline-block animate-in slide-in-from-left duration-700">Bring Nature</span>
+                  <span className="text-green-600 block animate-in slide-in-from-right duration-700 delay-300">Home Today</span>
                 </h1>
                 <p className="text-xl text-gray-600 leading-relaxed">
                   Discover our premium collection of indoor and outdoor plants. 
@@ -114,11 +112,11 @@ const Index = () => {
                 </p>
               </div>
               
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-4 animate-in fade-in duration-1000 delay-500">
                 <Link to="/products">
                   <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-lg transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
                     Shop Plants Now
-                    <ArrowRight className="ml-2 h-5 w-5" />
+                    <ArrowRight className="ml-2 h-5 w-5 animate-bounce-x" />
                   </Button>
                 </Link>
                 <Link to="/plant-care">
@@ -128,10 +126,10 @@ const Index = () => {
                 </Link>
               </div>
 
-              <div className="flex items-center gap-6 pt-4">
+              <div className="flex items-center gap-6 pt-4 animate-in fade-in duration-1000 delay-700">
                 <div className="flex -space-x-2">
                   {[1,2,3,4].map((i) => (
-                    <div key={i} className="w-10 h-10 rounded-full bg-green-200 border-2 border-white flex items-center justify-center animate-pulse">
+                    <div key={i} className="w-10 h-10 rounded-full bg-green-200 border-2 border-white flex items-center justify-center animate-pulse" style={{ animationDelay: `${i * 200}ms` }}>
                       <Leaf className="h-4 w-4 text-green-600" />
                     </div>
                   ))}
@@ -140,7 +138,7 @@ const Index = () => {
                   <p className="font-semibold text-gray-900">50,000+ Happy Customers</p>
                   <div className="flex items-center gap-1">
                     {[1,2,3,4,5].map((i) => (
-                      <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                      <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400 animate-in zoom-in duration-300" style={{ animationDelay: `${i * 100}ms` }} />
                     ))}
                     <span className="text-sm text-gray-600 ml-1">(4.8 rating)</span>
                   </div>
@@ -148,17 +146,17 @@ const Index = () => {
               </div>
             </div>
             
-            <div className="relative">
+            <div className="relative animate-in fade-in slide-in-from-right duration-1000">
               <div className="grid grid-cols-2 gap-4">
                 <img 
-                  src="https://images.unsplash.com/photo-1509315073617-d54ded7c04c3?w=300&h=400&fit=crop" 
+                  src={plants.find(p => p.name === "Ficus (All Types)")?.image || "https://unsplash.com/photos/a-group-of-potted-plants-sitting-next-to-each-other-3rla9s3dZy8?w=300&h=400&fit=crop"} 
                   alt="Beautiful plants"
-                  className="rounded-2xl shadow-xl transform rotate-2 hover:rotate-0 transition-transform duration-300"
+                  className="rounded-2xl shadow-xl transform rotate-2 hover:rotate-0 transition-transform duration-300 animate-in zoom-in duration-700"
                 />
                 <img 
-                  src="https://images.unsplash.com/photo-1600411833034-eb5a4fc3c1ff?w=300&h=400&fit=crop" 
+                  src={plants.find(p => p.name === "Areca Palm")?.image || "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=300&h=400&fit=crop"} 
                   alt="Indoor plants"
-                  className="rounded-2xl shadow-xl transform -rotate-2 hover:rotate-0 transition-transform duration-300 mt-8"
+                  className="rounded-2xl shadow-xl transform -rotate-2 hover:rotate-0 transition-transform duration-300 mt-8 animate-in zoom-in duration-700 delay-300"
                 />
               </div>
               <div className="absolute -bottom-4 -left-4 bg-white p-4 rounded-xl shadow-lg animate-bounce">
@@ -194,14 +192,14 @@ const Index = () => {
       {/* Categories */}
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom duration-700">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Shop by Category</h2>
             <p className="text-xl text-gray-600">Find the perfect plants for your space</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {categoryData.map((category, index) => (
-              <Link key={index} to="/products" className="group">
+              <Link key={index} to="/products" className="group animate-in fade-in slide-in-from-bottom duration-700" style={{ animationDelay: `${index * 150}ms` }}>
                 <Card className="hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-4 border-2 hover:border-green-200 overflow-hidden">
                   <div className="relative">
                     <img 
@@ -211,7 +209,7 @@ const Index = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="absolute top-4 right-4 text-4xl group-hover:scale-125 transition-transform duration-300">
-                      {category.icon}
+                      
                     </div>
                   </div>
                   <CardContent className="p-6 text-center">
@@ -232,14 +230,14 @@ const Index = () => {
       {/* Featured Products */}
       <section className="py-16 px-4 bg-gray-50">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom duration-700">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Featured Plants</h2>
             <p className="text-xl text-gray-600">Handpicked favorites from our collection</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {featuredPlants.map((plant) => (
-              <Link key={plant.id} to={`/product/${plant.id}`} className="group">
+            {featuredPlants.map((plant, index) => (
+              <Link key={plant.id} to={`/product/${plant.id}`} className="group animate-in fade-in slide-in-from-bottom duration-700" style={{ animationDelay: `${index * 150}ms` }}>
                 <Card className="overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-4 hover:rotate-1">
                   <div className="relative">
                     <img 
@@ -289,11 +287,11 @@ const Index = () => {
             ))}
           </div>
           
-          <div className="text-center mt-12">
+          <div className="text-center mt-12 animate-in fade-in duration-1000 delay-500">
             <Link to="/products">
               <Button size="lg" variant="outline" className="border-green-600 text-green-600 hover:bg-green-50 px-8 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
                 View All Plants
-                <ArrowRight className="ml-2 h-5 w-5" />
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:animate-bounce-x" />
               </Button>
             </Link>
           </div>
@@ -320,13 +318,13 @@ const Index = () => {
       {/* Why Choose Us */}
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom duration-700">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Why Choose Devakusuma?</h2>
             <p className="text-xl text-gray-600">Your trusted partner in creating green spaces</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center p-8 transform hover:scale-105 transition-all duration-300">
+            <div className="text-center p-8 transform hover:scale-105 transition-all duration-300 animate-in fade-in slide-in-from-bottom duration-700 delay-100">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 hover:bg-green-200 transition-colors duration-300">
                 <Leaf className="h-8 w-8 text-green-600" />
               </div>
@@ -334,7 +332,7 @@ const Index = () => {
               <p className="text-gray-600">Hand-selected, healthy plants from certified growers with quality guarantee.</p>
             </div>
             
-            <div className="text-center p-8 transform hover:scale-105 transition-all duration-300">
+            <div className="text-center p-8 transform hover:scale-105 transition-all duration-300 animate-in fade-in slide-in-from-bottom duration-700 delay-300">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 hover:bg-green-200 transition-colors duration-300">
                 <Package className="h-8 w-8 text-green-600" />
               </div>
@@ -342,7 +340,7 @@ const Index = () => {
               <p className="text-gray-600">Secure packaging and fast delivery to ensure your plants arrive in perfect condition.</p>
             </div>
             
-            <div className="text-center p-8 transform hover:scale-105 transition-all duration-300">
+            <div className="text-center p-8 transform hover:scale-105 transition-all duration-300 animate-in fade-in slide-in-from-bottom duration-700 delay-500">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 hover:bg-green-200 transition-colors duration-300">
                 <CheckCircle className="h-8 w-8 text-green-600" />
               </div>
