@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Search, ShoppingCart, Leaf, Star, ArrowRight, Package, CheckCircle, Users } from "lucide-react";
+import { Search, ShoppingCart, Leaf, Star, ArrowRight, Package, CheckCircle, Users, Gift } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { categories, plants } from "@/data/plants";
+import { categories, plants, comboPacks } from "@/data/plants";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -170,21 +170,72 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Search Section */}
-      <section className="py-12 px-4 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <div className="relative transform hover:scale-102 transition-transform duration-300">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-6 w-6" />
-            <input
-              type="text"
-              placeholder="Search for plants, seeds, or garden supplies..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-6 py-4 text-lg border-2 border-gray-200 rounded-full focus:border-green-500 focus:outline-none shadow-lg focus:shadow-xl transition-all duration-300"
-            />
-            <Button className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-green-600 hover:bg-green-700 rounded-full px-8 hover:scale-105 transition-all duration-300">
-              Search
-            </Button>
+      {/* Interactive Plant Animation Section */}
+      <section className="py-12 px-4 bg-white overflow-hidden">
+        <div className="max-w-5xl mx-auto relative">
+          <div className="flex flex-col items-center justify-center">
+            <h2 className="text-3xl font-bold text-center mb-8 text-green-700 animate-pulse">
+              <span className="inline-block animate-bounce-slow">🌱</span> Watch Your Garden Grow <span className="inline-block animate-bounce-slow delay-300">🌿</span>
+            </h2>
+            
+            <div className="relative w-full h-64 bg-gradient-to-r from-green-50 to-amber-50 rounded-2xl shadow-xl overflow-hidden">
+              {/* Sun */}
+              <div className="absolute top-6 right-12 w-16 h-16 bg-yellow-300 rounded-full animate-pulse shadow-lg z-10">
+                <div className="absolute inset-0 rounded-full bg-yellow-400 animate-ping opacity-75"></div>
+              </div>
+              
+              {/* Ground */}
+              <div className="absolute bottom-0 left-0 right-0 h-24 bg-amber-800 rounded-b-2xl">
+                <div className="absolute top-0 left-0 right-0 h-4 bg-gradient-to-r from-amber-700 to-amber-900"></div>
+              </div>
+              
+              {/* Plants growing */}
+              <div className="absolute bottom-24 left-1/4 transform -translate-x-1/2">
+                <div className="w-1 h-0 bg-green-600 animate-grow-height origin-bottom"></div>
+                <div className="absolute -top-4 -left-4 w-8 h-8 opacity-0 animate-leaf-appear delay-1000">
+                  <div className="w-8 h-8 bg-green-500 rounded-full transform rotate-45 scale-75"></div>
+                </div>
+              </div>
+              
+              <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2">
+                <div className="w-1 h-0 bg-green-600 animate-grow-height-delay origin-bottom"></div>
+                <div className="absolute -top-6 -left-6 w-12 h-12 opacity-0 animate-leaf-appear delay-1500">
+                  <div className="w-12 h-12 bg-green-400 rounded-full transform rotate-45 scale-75"></div>
+                </div>
+              </div>
+              
+              <div className="absolute bottom-24 left-3/4 transform -translate-x-1/2">
+                <div className="w-1 h-0 bg-green-600 animate-grow-height-delay-more origin-bottom"></div>
+                <div className="absolute -top-5 -left-5 w-10 h-10 opacity-0 animate-leaf-appear delay-2000">
+                  <div className="w-10 h-10 bg-green-500 rounded-full transform rotate-45 scale-75"></div>
+                </div>
+              </div>
+              
+              {/* Water drops */}
+              <div className="absolute top-12 left-1/4 w-2 h-2 bg-blue-400 rounded-full opacity-0 animate-water-drop"></div>
+              <div className="absolute top-12 left-1/2 w-2 h-2 bg-blue-400 rounded-full opacity-0 animate-water-drop delay-500"></div>
+              <div className="absolute top-12 left-3/4 w-2 h-2 bg-blue-400 rounded-full opacity-0 animate-water-drop delay-1000"></div>
+              
+              {/* Floating text */}
+              <div className="absolute top-8 left-8 text-lg font-semibold text-green-800 opacity-0 animate-float-text">
+                Nurture
+              </div>
+              <div className="absolute top-16 left-1/3 text-lg font-semibold text-green-800 opacity-0 animate-float-text delay-700">
+                Grow
+              </div>
+              <div className="absolute top-8 left-2/3 text-lg font-semibold text-green-800 opacity-0 animate-float-text delay-1400">
+                Thrive
+              </div>
+            </div>
+            
+            <div className="mt-8 text-center">
+              <Link to="/products">
+                <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-lg transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                  Explore Our Collection
+                  <ArrowRight className="ml-2 h-5 w-5 animate-bounce-x" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -292,6 +343,79 @@ const Index = () => {
               <Button size="lg" variant="outline" className="border-green-600 text-green-600 hover:bg-green-50 px-8 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
                 View All Plants
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:animate-bounce-x" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+      
+      {/* Combo Packs */}
+      <section className="py-16 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom duration-700">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Special Combo Packs</h2>
+            <p className="text-xl text-gray-600">Curated collections for every space and occasion</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {comboPacks.filter(pack => [
+              "Festival Floral Set", 
+              "Balcony Starter Kit", 
+              "Gifting Pack (Small)", 
+              "Cactus & Succulent Collection"
+            ].includes(pack.name)).map((pack, index) => (
+              <Link key={pack.id} to={`/combo-pack/${pack.id}`} className="group animate-in fade-in slide-in-from-bottom duration-700" style={{ animationDelay: `${index * 150}ms` }}>
+                <Card className="overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-4 hover:rotate-1 border-2 border-transparent hover:border-green-200">
+                  <div className="relative">
+                    <img 
+                      src={pack.image} 
+                      alt={pack.name}
+                      className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <Badge className="absolute top-4 left-4 bg-purple-500 text-white">
+                      COMBO
+                    </Badge>
+                    <Badge className="absolute top-12 left-4 bg-red-500 text-white animate-pulse">
+                      SAVE ₹{pack.originalPrice - pack.price}
+                    </Badge>
+                    <Button 
+                      size="sm" 
+                      className="absolute top-4 right-4 bg-white/90 text-gray-700 hover:bg-white opacity-0 group-hover:opacity-100 transition-all duration-300 transform hover:scale-110"
+                    >
+                      <ShoppingCart className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  <CardContent className="p-6">
+                    <h3 className="font-semibold text-lg text-gray-900 mb-2 group-hover:text-green-600 transition-colors duration-300">
+                      {pack.name}
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+                      {pack.description}
+                    </p>
+                    <div className="flex flex-wrap gap-1 mb-3">
+                      {pack.plants.map((plant, i) => (
+                        <Badge key={i} variant="outline" className="bg-green-50">
+                          {plant}
+                        </Badge>
+                      ))}
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="text-2xl font-bold text-green-600">₹{pack.price}</span>
+                        <span className="text-lg text-gray-500 line-through">₹{pack.originalPrice}</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
+          
+          <div className="text-center mt-12 animate-in fade-in duration-1000 delay-500">
+            <Link to="/products">
+              <Button size="lg" variant="outline" className="border-purple-600 text-purple-600 hover:bg-purple-50 px-8 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                View All Combo Packs
+                <Gift className="ml-2 h-5 w-5" />
               </Button>
             </Link>
           </div>

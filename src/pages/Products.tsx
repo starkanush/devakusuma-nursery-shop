@@ -179,7 +179,7 @@ const Products = () => {
               {filteredProducts.map((product) => (
                 <Link 
                   key={product.id} 
-                  to={isComboPack(product) ? `/combo/${product.id}` : `/product/${product.id}`} 
+                  to={isComboPack(product) ? `/combo-pack/${product.id}` : `/product/${product.id}`} 
                   className="group"
                 >
                   <Card className={`overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${

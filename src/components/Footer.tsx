@@ -1,161 +1,116 @@
 
 import { Link } from "react-router-dom";
-import { Leaf, MapPin, Phone, Mail, MessageCircle } from "lucide-react";
+import { Leaf, MapPin, Phone, Mail, MessageCircle, Instagram } from "lucide-react";
 
 const Footer = () => {
-  const handleWhatsAppClick = () => {
-    window.open("https://wa.me/918074525253", "_blank");
-  };
-
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 py-16">
+    <footer className="bg-gray-900 border-t border-gray-800 text-gray-300">
+      <div className="container mx-auto py-12 px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Company Info */}
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <Leaf className="h-8 w-8 text-green-500" />
-              <div>
-                <h3 className="text-xl font-bold">Devakusuma</h3>
-                <p className="text-sm text-gray-400">Nursery Garden</p>
-              </div>
-            </div>
-            <p className="text-gray-400 leading-relaxed">
-              Your trusted partner in creating beautiful green spaces. We provide premium quality plants and expert gardening solutions for over a decade.
-            </p>
-            <div className="flex space-x-4">
-              <button 
-                onClick={handleWhatsAppClick}
-                className="bg-green-600 hover:bg-green-700 p-3 rounded-full transform hover:scale-110 transition-all duration-300"
-                aria-label="WhatsApp"
-              >
-                <MessageCircle className="h-5 w-5" />
-              </button>
-            </div>
-          </div>
-
-          {/* Quick Links */}
+          {/* Navigation */}
           <div>
-            <h4 className="text-lg font-semibold mb-6">Quick Links</h4>
-            <ul className="space-y-3">
+            <h3 className="text-lg font-semibold text-amber-400 mb-4">Navigation</h3>
+            <ul className="space-y-2">
               <li>
-                <Link to="/" className="text-gray-400 hover:text-white transition-colors">
-                  Home
-                </Link>
+                <Link to="/" className="text-gray-400 hover:text-amber-400 transition-colors">Home</Link>
               </li>
               <li>
-                <Link to="/products" className="text-gray-400 hover:text-white transition-colors">
-                  Plants
-                </Link>
+                <Link to="/products" className="text-gray-400 hover:text-amber-400 transition-colors">Shop</Link>
               </li>
               <li>
-                <Link to="/plant-care" className="text-gray-400 hover:text-white transition-colors">
-                  Plant Care
-                </Link>
+                <Link to="/about" className="text-gray-400 hover:text-amber-400 transition-colors">About Us</Link>
               </li>
               <li>
-                <Link to="/about" className="text-gray-400 hover:text-white transition-colors">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="text-gray-400 hover:text-white transition-colors">
-                  Contact
-                </Link>
+                <Link to="/contact" className="text-gray-400 hover:text-amber-400 transition-colors">Contact</Link>
               </li>
             </ul>
           </div>
 
-          {/* Plant Categories */}
+          {/* Categories */}
           <div>
-            <h4 className="text-lg font-semibold mb-6">Plant Categories</h4>
-            <ul className="space-y-3">
+            <h3 className="text-lg font-semibold text-amber-400 mb-4">Categories</h3>
+            <ul className="space-y-2">
               <li>
-                <Link to="/products" className="text-gray-400 hover:text-white transition-colors">
-                  Indoor Plants
-                </Link>
+                <span className="text-gray-500 cursor-not-allowed">Indoor Plants</span>
               </li>
               <li>
-                <Link to="/products" className="text-gray-400 hover:text-white transition-colors">
-                  Outdoor Plants
-                </Link>
+                <span className="text-gray-500 cursor-not-allowed">Outdoor Plants</span>
               </li>
               <li>
-                <Link to="/products" className="text-gray-400 hover:text-white transition-colors">
-                  Flowering Plants
-                </Link>
+                <span className="text-gray-500 cursor-not-allowed">Succulents</span>
               </li>
               <li>
-                <Link to="/products" className="text-gray-400 hover:text-white transition-colors">
-                  Air Purifying
-                </Link>
-              </li>
-              <li>
-                <Link to="/products" className="text-gray-400 hover:text-white transition-colors">
-                  Low Maintenance
-                </Link>
+                <span className="text-gray-500 cursor-not-allowed">Accessories</span>
               </li>
             </ul>
           </div>
 
-          {/* Contact Info */}
+          {/* Contact */}
           <div>
-            <h4 className="text-lg font-semibold mb-6">Contact Info</h4>
-            <div className="space-y-4">
-              <div className="flex items-start space-x-3">
-                <MapPin className="h-5 w-5 text-green-500 mt-1 flex-shrink-0" />
-                <div>
-                  <p className="text-gray-400">
-                    Venkayamma Peta Road<br />
-                    Rajamahendravaram<br />
-                    Andhra Pradesh
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex items-center space-x-3">
-                <Phone className="h-5 w-5 text-green-500 flex-shrink-0" />
-                <div className="space-y-1">
-                  <a href="tel:8074525253" className="text-gray-400 hover:text-white transition-colors block">
-                    8074525253
-                  </a>
-                  <a href="tel:9133229522" className="text-gray-400 hover:text-white transition-colors block">
-                    9133229522
-                  </a>
-                </div>
-              </div>
-              
-              <div className="flex items-center space-x-3">
-                <Mail className="h-5 w-5 text-green-500 flex-shrink-0" />
-                <a 
-                  href="mailto:info@devakusuma.com" 
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  info@devakusuma.com
+            <h3 className="text-lg font-semibold text-amber-400 mb-4">Contact Us</h3>
+            <ul className="space-y-2">
+              <li className="text-gray-400 flex items-center gap-2">
+                <MapPin size={16} /> 
+                <a href="https://maps.google.com/?q=Venkayamma+Peta+Road+Rajamahendravaram+Andhra+Pradesh" target="_blank" rel="noopener noreferrer" className="hover:text-amber-400 transition-colors">
+                  Devakusuma Nursery Garden<br />
+                  Venkayamma Peta Road<br />
+                  Rajamahendravaram, Andhra Pradesh
                 </a>
-              </div>
+              </li>
+              <li className="text-gray-400 flex items-center gap-2">
+                <Phone size={16} /> 
+                <a href="tel:+918074525253" className="hover:text-amber-400 transition-colors">
+                  +91 8074525253
+                </a>
+              </li>
+              <li className="text-gray-400 flex items-center gap-2">
+                <Mail size={16} /> 
+                <a href="mailto:hello@devakusuma.com" className="hover:text-amber-400 transition-colors">
+                  hello@devakusuma.com
+                </a>
+              </li>
+            </ul>
+          </div>
 
-              <div className="pt-4">
-                <p className="text-sm text-gray-400 mb-2">Business Hours:</p>
-                <p className="text-green-400 font-medium">Open Daily: 5:00 AM - 7:00 PM</p>
-              </div>
+          {/* Newsletter */}
+          <div>
+            <h3 className="text-lg font-semibold text-amber-400 mb-4">Stay Connected</h3>
+            <p className="text-gray-400 mb-4">Follow us on Instagram for updates and special offers.</p>
+            <div className="mt-4 flex space-x-4">
+              <a 
+                href="https://www.instagram.com/dng_plants?igsh=MWxoeWFid2R4ZXJvZg==" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 group"
+              >
+                <button className="bg-gradient-to-r from-amber-500 to-pink-500 text-white rounded-full p-2 transition-colors hover:from-amber-600 hover:to-pink-600">
+                  <Instagram size={18} />
+                </button>
+                <span className="text-gray-400 group-hover:text-amber-400 transition-colors">Follow us on Instagram</span>
+              </a>
+            </div>
+            <div className="mt-4 flex space-x-4">
+              <a 
+                href="https://wa.me/918074525253" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 group"
+              >
+                <button className="bg-green-600 hover:bg-green-700 text-white rounded-full p-2 transition-colors">
+                  <MessageCircle size={18} />
+                </button>
+                <span className="text-gray-400 group-hover:text-green-400 transition-colors">Chat with us on WhatsApp</span>
+              </a>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-12 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="text-gray-400 text-sm">
-              © 2024 Devakusuma Nursery Garden. All rights reserved.
-            </div>
-            <div className="flex space-x-6 mt-4 md:mt-0">
-              <Link to="/privacy" className="text-gray-400 hover:text-white text-sm transition-colors">
-                Privacy Policy
-              </Link>
-              <Link to="/terms" className="text-gray-400 hover:text-white text-sm transition-colors">
-                Terms of Service
-              </Link>
-            </div>
+        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">
+          <p>© {new Date().getFullYear()} Deva Kusuma Nursery. All rights reserved.</p>
+          <div className="mt-4 flex justify-center space-x-6">
+            <Link to="/privacy-policy" className="text-gray-500 hover:text-amber-400 transition-colors">Privacy Policy</Link>
+            <Link to="/terms-of-service" className="text-gray-500 hover:text-amber-400 transition-colors">Terms of Service</Link>
+            <Link to="/shipping-policy" className="text-gray-500 hover:text-amber-400 transition-colors">Shipping Policy</Link>
           </div>
         </div>
       </div>
